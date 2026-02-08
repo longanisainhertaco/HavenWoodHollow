@@ -1,0 +1,195 @@
+skill:
+  name: script.monobehaviour
+  category: script-generation
+  version: "1.0"
+  description: |
+    Creates a new MonoBehaviour C# script with configurable options.
+    Follows Unity best practices for script organization.
+
+inputs:
+  - name: className
+    type: string
+    required: true
+    description: Name of the class (also used as filename)
+    
+  - name: namespace
+    type: string
+    required: false
+    description: Optional namespace to wrap the class
+    
+  - name: folder
+    type: string
+    required: false
+    default: "Assets/Scripts"
+    description: Folder path for the script
+    
+  - name: includeAwake
+    type: boolean
+    default: true
+    description: Include Awake method
+    
+  - name: includeStart
+    type: boolean
+    default: true
+    description: Include Start method
+    
+  - name: includeUpdate
+    type: boolean
+    default: true
+    description: Include Update method
+    
+  - name: includeFixedUpdate
+    type: boolean
+    default: false
+    description: Include FixedUpdate method
+    
+  - name: includeLateUpdate
+    type: boolean
+    default: false
+    description: Include LateUpdate method
+    
+  - name: includeOnEnable
+    type: boolean
+    default: false
+    description: Include OnEnable method
+    
+  - name: includeOnDisable
+    type: boolean
+    default: false
+    description: Include OnDisable method
+    
+  - name: serializedFields
+    type: array
+    required: false
+    description: |
+      Array of serialized field definitions:
+      [{ name: "fieldName", type: "float", defaultValue: "1f" }]
+    
+  - name: summary
+    type: string
+    required: false
+    description: XML summary comment for the class
+
+outputs:
+  - name: scriptPath
+    type: string
+    description: Full path to the created script
+    
+  - name: success
+    type: boolean
+    description: Whether the script was created successfully
+
+implementation:
+  tool: unity_script_create
+  params:
+    name: "{{inputs.className}}"
+    path: "{{inputs.folder}}"
+    namespace: "{{inputs.namespace}}"
+    template: MonoBehaviour
+    content: |
+      using System;
+      using System.Collections;
+      using System.Collections.Generic;
+      using UnityEngine;
+
+      {% if inputs.namespace %}
+      namespace {{inputs.namespace}}
+      {
+      {% endif %}
+          /// <summary>
+          /// {{inputs.summary | default: inputs.className + " behaviour."}}
+          /// </summary>
+          public class {{inputs.className}} : MonoBehaviour
+          {
+              #region Serialized Fields
+              {% for field in inputs.serializedFields %}
+              [SerializeField] private {{field.type}} {{field.name}}{% if field.defaultValue %} = {{field.defaultValue}}{% endif %};
+              {% endfor %}
+              #endregion
+
+              #region Private Fields
+              #endregion
+
+              #region Unity Lifecycle
+              {% if inputs.includeAwake %}
+
+              private void Awake()
+              {
+              }
+              {% endif %}
+              {% if inputs.includeOnEnable %}
+
+              private void OnEnable()
+              {
+              }
+              {% endif %}
+              {% if inputs.includeStart %}
+
+              private void Start()
+              {
+              }
+              {% endif %}
+              {% if inputs.includeUpdate %}
+
+              private void Update()
+              {
+              }
+              {% endif %}
+              {% if inputs.includeFixedUpdate %}
+
+              private void FixedUpdate()
+              {
+              }
+              {% endif %}
+              {% if inputs.includeLateUpdate %}
+
+              private void LateUpdate()
+              {
+              }
+              {% endif %}
+              {% if inputs.includeOnDisable %}
+
+              private void OnDisable()
+              {
+              }
+              {% endif %}
+
+              #endregion
+
+              #region Public Methods
+              #endregion
+
+              #region Private Methods
+              #endregion
+          }
+      {% if inputs.namespace %}
+      }
+      {% endif %}
+
+examples:
+  - name: Basic Player Controller
+    inputs:
+      className: PlayerController
+      namespace: Game.Player
+      includeFixedUpdate: true
+      serializedFields:
+        - name: moveSpeed
+          type: float
+          defaultValue: "5f"
+        - name: jumpForce
+          type: float
+          defaultValue: "10f"
+      summary: Handles player movement and input
+
+  - name: Simple Enemy AI
+    inputs:
+      className: EnemyAI
+      folder: "Assets/Scripts/Enemies"
+      includeUpdate: true
+      includeOnEnable: true
+      serializedFields:
+        - name: target
+          type: Transform
+        - name: chaseSpeed
+          type: float
+          defaultValue: "3f"

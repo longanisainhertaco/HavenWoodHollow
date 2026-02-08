@@ -1,0 +1,363 @@
+name: character-creation
+description: Creates a playable character with movement, animation controller, and basic components
+version: "1.0"
+
+prerequisites:
+  - Unity Editor is running
+  - MCP Bridge is connected
+  - A scene is loaded
+
+parameters:
+  - name: characterName
+    type: string
+    required: true
+    default: "Player"
+    description: Name for the character GameObject and scripts
+    
+  - name: characterType
+    type: enum
+    options: [Player, NPC, Enemy]
+    required: true
+    default: Player
+    description: Type of character to create
+    
+  - name: movementType
+    type: enum
+    options: [TopDown2D, Platformer2D, FirstPerson3D, ThirdPerson3D, PointAndClick]
+    required: true
+    description: Movement style for the character
+    
+  - name: hasHealthSystem
+    type: boolean
+    default: true
+    description: Include health and damage system
+    
+  - name: maxHealth
+    type: number
+    default: 100
+    description: Maximum health for the character
+
+steps:
+  # Step 1: Create character GameObject
+  - name: create-character-object
+    description: Create the main character GameObject
+    tool: unity_gameobject_create
+    params:
+      name: "{{characterName}}"
+      primitiveType: capsule
+      position:
+        x: 0
+        y: 1
+        z: 0
+      tag: "{{characterType}}"
+    on_error: abort
+
+  # Step 2: Create movement script based on type
+  - name: create-movement-script
+    description: Create the appropriate movement controller script
+    tool: unity_script_create
+    params:
+      name: "{{characterName}}Controller"
+      path: "Assets/_Project/Scripts/Gameplay"
+      content: |
+        using System;
+        using UnityEngine;
+
+        /// <summary>
+        /// Controls {{characterName}} movement and input.
+        /// Movement Type: {{movementType}}
+        /// </summary>
+        public class {{characterName}}Controller : MonoBehaviour
+        {
+            [Header("Movement Settings")]
+            [SerializeField] private float moveSpeed = 5f;
+            [SerializeField] private float rotationSpeed = 720f;
+            {% if movementType == "Platformer2D" or movementType == "FirstPerson3D" or movementType == "ThirdPerson3D" %}
+            [SerializeField] private float jumpForce = 10f;
+            [SerializeField] private LayerMask groundLayer;
+            {% endif %}
+
+            [Header("Components")]
+            {% if movementType contains "2D" %}
+            private Rigidbody2D rb;
+            {% else %}
+            private CharacterController characterController;
+            private Rigidbody rb;
+            {% endif %}
+            
+            private Vector3 moveDirection;
+            private bool isGrounded;
+            
+            {% if movementType == "FirstPerson3D" or movementType == "ThirdPerson3D" %}
+            private float verticalVelocity;
+            private const float Gravity = -9.81f;
+            {% endif %}
+
+            private void Awake()
+            {
+                {% if movementType contains "2D" %}
+                rb = GetComponent<Rigidbody2D>();
+                if (rb == null) rb = gameObject.AddComponent<Rigidbody2D>();
+                {% else %}
+                characterController = GetComponent<CharacterController>();
+                if (characterController == null) characterController = gameObject.AddComponent<CharacterController>();
+                {% endif %}
+            }
+
+            private void Update()
+            {
+                HandleInput();
+                {% if movementType == "TopDown2D" or movementType == "PointAndClick" %}
+                HandleMovement2D();
+                {% else %}
+                HandleMovement();
+                {% endif %}
+            }
+
+            private void HandleInput()
+            {
+                {% if movementType == "TopDown2D" %}
+                float horizontal = Input.GetAxisRaw("Horizontal");
+                float vertical = Input.GetAxisRaw("Vertical");
+                moveDirection = new Vector3(horizontal, vertical, 0).normalized;
+                {% elif movementType == "Platformer2D" %}
+                float horizontal = Input.GetAxisRaw("Horizontal");
+                moveDirection = new Vector3(horizontal, 0, 0);
+                
+                if (Input.GetButtonDown("Jump") && isGrounded)
+                {
+                    rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                }
+                {% elif movementType == "FirstPerson3D" or movementType == "ThirdPerson3D" %}
+                float horizontal = Input.GetAxisRaw("Horizontal");
+                float vertical = Input.GetAxisRaw("Vertical");
+                moveDirection = transform.right * horizontal + transform.forward * vertical;
+                moveDirection = moveDirection.normalized;
+                
+                // Handle jumping
+                isGrounded = characterController.isGrounded;
+                if (isGrounded && verticalVelocity < 0)
+                {
+                    verticalVelocity = -2f;
+                }
+                
+                if (Input.GetButtonDown("Jump") && isGrounded)
+                {
+                    verticalVelocity = Mathf.Sqrt(jumpForce * -2f * Gravity);
+                }
+                
+                verticalVelocity += Gravity * Time.deltaTime;
+                {% elif movementType == "PointAndClick" %}
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    if (Physics.Raycast(ray, out RaycastHit hit))
+                    {
+                        moveDirection = (hit.point - transform.position).normalized;
+                        moveDirection.y = 0;
+                    }
+                }
+                {% endif %}
+            }
+
+            {% if movementType == "TopDown2D" or movementType == "Platformer2D" %}
+            private void HandleMovement2D()
+            {
+                {% if movementType == "TopDown2D" %}
+                rb.velocity = moveDirection * moveSpeed;
+                {% else %}
+                rb.velocity = new Vector2(moveDirection.x * moveSpeed, rb.velocity.y);
+                {% endif %}
+                
+                // Flip sprite based on direction
+                if (moveDirection.x != 0)
+                {
+                    transform.localScale = new Vector3(
+                        Mathf.Sign(moveDirection.x) * Mathf.Abs(transform.localScale.x),
+                        transform.localScale.y,
+                        transform.localScale.z
+                    );
+                }
+            }
+            {% else %}
+            private void HandleMovement()
+            {
+                {% if movementType == "FirstPerson3D" or movementType == "ThirdPerson3D" %}
+                Vector3 move = moveDirection * moveSpeed + Vector3.up * verticalVelocity;
+                characterController.Move(move * Time.deltaTime);
+                {% else %}
+                transform.position += moveDirection * moveSpeed * Time.deltaTime;
+                {% endif %}
+                
+                // Rotate towards movement direction
+                if (moveDirection.magnitude > 0.1f)
+                {
+                    Quaternion targetRotation = Quaternion.LookRotation(new Vector3(moveDirection.x, 0, moveDirection.z));
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                }
+            }
+            {% endif %}
+        }
+    on_error: continue
+
+  # Step 3: Create health system if requested
+  - name: create-health-script
+    condition: "{{hasHealthSystem}}"
+    description: Create health and damage system
+    tool: unity_script_create
+    params:
+      name: HealthSystem
+      path: "Assets/_Project/Scripts/Gameplay"
+      content: |
+        using System;
+        using UnityEngine;
+
+        /// <summary>
+        /// Manages health, damage, and death for characters.
+        /// </summary>
+        public class HealthSystem : MonoBehaviour
+        {
+            [Header("Health Settings")]
+            [SerializeField] private float maxHealth = {{maxHealth}};
+            [SerializeField] private float currentHealth;
+            [SerializeField] private bool isInvulnerable;
+            
+            [Header("Invulnerability")]
+            [SerializeField] private float invulnerabilityDuration = 1f;
+            
+            public float MaxHealth => maxHealth;
+            public float CurrentHealth => currentHealth;
+            public float HealthPercentage => currentHealth / maxHealth;
+            public bool IsAlive => currentHealth > 0;
+            public bool IsInvulnerable => isInvulnerable;
+            
+            public event Action<float, float> OnHealthChanged; // current, max
+            public event Action<float> OnDamageTaken;
+            public event Action<float> OnHealed;
+            public event Action OnDeath;
+
+            private void Awake()
+            {
+                currentHealth = maxHealth;
+            }
+
+            public void TakeDamage(float damage)
+            {
+                if (isInvulnerable || !IsAlive) return;
+                
+                currentHealth = Mathf.Max(0, currentHealth - damage);
+                OnDamageTaken?.Invoke(damage);
+                OnHealthChanged?.Invoke(currentHealth, maxHealth);
+                
+                if (currentHealth <= 0)
+                {
+                    Die();
+                }
+            }
+
+            public void Heal(float amount)
+            {
+                if (!IsAlive) return;
+                
+                float previousHealth = currentHealth;
+                currentHealth = Mathf.Min(maxHealth, currentHealth + amount);
+                float healedAmount = currentHealth - previousHealth;
+                
+                if (healedAmount > 0)
+                {
+                    OnHealed?.Invoke(healedAmount);
+                    OnHealthChanged?.Invoke(currentHealth, maxHealth);
+                }
+            }
+
+            public void SetInvulnerable(bool invulnerable)
+            {
+                isInvulnerable = invulnerable;
+            }
+
+            public void SetInvulnerableForDuration()
+            {
+                StartCoroutine(InvulnerabilityCoroutine());
+            }
+
+            private System.Collections.IEnumerator InvulnerabilityCoroutine()
+            {
+                isInvulnerable = true;
+                yield return new WaitForSeconds(invulnerabilityDuration);
+                isInvulnerable = false;
+            }
+
+            private void Die()
+            {
+                OnDeath?.Invoke();
+                Debug.Log($"{gameObject.name} has died!");
+            }
+
+            public void Revive(float healthPercentage = 1f)
+            {
+                currentHealth = maxHealth * Mathf.Clamp01(healthPercentage);
+                OnHealthChanged?.Invoke(currentHealth, maxHealth);
+            }
+        }
+    on_error: continue
+
+  # Step 4: Add components to character
+  - name: add-character-controller
+    description: Add CharacterController or Rigidbody2D component
+    tool: unity_component_add
+    params:
+      target: "{{characterName}}"
+      componentType: "{% if movementType contains '2D' %}Rigidbody2D{% else %}CharacterController{% endif %}"
+    on_error: continue
+
+  # Step 5: Attach scripts to character
+  - name: attach-movement-script
+    description: Attach the movement controller script
+    tool: unity_component_add
+    params:
+      target: "{{characterName}}"
+      componentType: "{{characterName}}Controller"
+    on_error: continue
+
+  - name: attach-health-script
+    condition: "{{hasHealthSystem}}"
+    description: Attach the health system script
+    tool: unity_component_add
+    params:
+      target: "{{characterName}}"
+      componentType: HealthSystem
+    on_error: continue
+
+  # Step 6: Create prefab
+  - name: create-prefab
+    description: Save character as a prefab
+    tool: unity_prefab_create
+    params:
+      target: "{{characterName}}"
+      path: "Assets/_Project/Prefabs/Characters"
+    on_error: continue
+
+  # Step 7: Refresh assets
+  - name: refresh-assets
+    description: Refresh to compile new scripts
+    tool: unity_asset_refresh
+    on_error: continue
+
+completion:
+  message: |
+    Character "{{characterName}}" created successfully!
+    
+    Created:
+    - {{characterName}} GameObject with Capsule mesh
+    - {{characterName}}Controller script ({{movementType}} movement)
+    {% if hasHealthSystem %}
+    - HealthSystem script ({{maxHealth}} max health)
+    {% endif %}
+    - Prefab saved to Assets/_Project/Prefabs/Characters
+    
+    Next steps:
+    1. Wait for scripts to compile
+    2. Add a SpriteRenderer or 3D model
+    3. Set up animations
+    4. Configure colliders and physics layers
+    5. Test the character in Play mode

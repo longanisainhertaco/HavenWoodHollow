@@ -1,0 +1,332 @@
+name: new-project-setup
+description: Initialize a new Unity project with standard folder structure, settings, and essential components
+version: "1.0"
+
+prerequisites:
+  - Unity Editor is running
+  - MCP Bridge is connected
+
+parameters:
+  - name: projectName
+    type: string
+    required: true
+    description: Name of the game project
+    
+  - name: companyName
+    type: string
+    required: false
+    default: "MyCompany"
+    description: Company/developer name
+    
+  - name: gameType
+    type: enum
+    options: [2D, 3D, 2D-TopDown, 3D-FirstPerson, 3D-ThirdPerson]
+    required: true
+    description: Type of game being created
+    
+  - name: createGitignore
+    type: boolean
+    default: true
+    description: Create Unity .gitignore file
+
+steps:
+  # Step 1: Verify connection
+  - name: verify-connection
+    description: Ensure we're connected to Unity
+    tool: unity_status
+    on_error: abort
+    
+  # Step 2: Create folder structure
+  - name: create-folders
+    description: Create standard project folder structure
+    sequence:
+      - tool: unity_folder_create
+        params:
+          path: "Assets/_Project"
+      - tool: unity_folder_create
+        params:
+          path: "Assets/_Project/Animations"
+      - tool: unity_folder_create
+        params:
+          path: "Assets/_Project/Audio/Music"
+      - tool: unity_folder_create
+        params:
+          path: "Assets/_Project/Audio/SFX"
+      - tool: unity_folder_create
+        params:
+          path: "Assets/_Project/Materials"
+      - tool: unity_folder_create
+        params:
+          path: "Assets/_Project/Models"
+      - tool: unity_folder_create
+        params:
+          path: "Assets/_Project/Prefabs/Characters"
+      - tool: unity_folder_create
+        params:
+          path: "Assets/_Project/Prefabs/Environment"
+      - tool: unity_folder_create
+        params:
+          path: "Assets/_Project/Prefabs/Items"
+      - tool: unity_folder_create
+        params:
+          path: "Assets/_Project/Prefabs/UI"
+      - tool: unity_folder_create
+        params:
+          path: "Assets/_Project/Scenes/Levels"
+      - tool: unity_folder_create
+        params:
+          path: "Assets/_Project/Scenes/UI"
+      - tool: unity_folder_create
+        params:
+          path: "Assets/_Project/Scripts/Core"
+      - tool: unity_folder_create
+        params:
+          path: "Assets/_Project/Scripts/Gameplay"
+      - tool: unity_folder_create
+        params:
+          path: "Assets/_Project/Scripts/UI"
+      - tool: unity_folder_create
+        params:
+          path: "Assets/_Project/Scripts/Editor"
+      - tool: unity_folder_create
+        params:
+          path: "Assets/_Project/ScriptableObjects"
+      - tool: unity_folder_create
+        params:
+          path: "Assets/_Project/Shaders"
+      - tool: unity_folder_create
+        params:
+          path: "Assets/_Project/Textures"
+    on_error: continue
+    
+  # Step 3: Configure player settings
+  - name: configure-settings
+    description: Set up player settings
+    tool: unity_player_settings
+    params:
+      action: set
+      settings:
+        productName: "{{projectName}}"
+        companyName: "{{companyName}}"
+    on_error: continue
+    
+  # Step 4: Create Game Manager script
+  - name: create-game-manager
+    description: Create the main game manager singleton
+    tool: unity_script_create
+    params:
+      name: GameManager
+      path: "Assets/_Project/Scripts/Core"
+      namespace: "{{projectName}}.Core"
+      template: MonoBehaviour
+      content: |
+        using System;
+        using UnityEngine;
+        using UnityEngine.SceneManagement;
+
+        namespace {{projectName}}.Core
+        {
+            /// <summary>
+            /// Main game manager singleton. Persists across scenes.
+            /// </summary>
+            public class GameManager : MonoBehaviour
+            {
+                public static GameManager Instance { get; private set; }
+
+                [Header("Game State")]
+                [SerializeField] private bool isPaused;
+                
+                public bool IsPaused => isPaused;
+                
+                public event Action<bool> OnPauseChanged;
+                public event Action OnGameStarted;
+                public event Action OnGameEnded;
+
+                private void Awake()
+                {
+                    if (Instance != null && Instance != this)
+                    {
+                        Destroy(gameObject);
+                        return;
+                    }
+                    
+                    Instance = this;
+                    DontDestroyOnLoad(gameObject);
+                    Initialize();
+                }
+
+                private void Initialize()
+                {
+                    // Initialize game systems
+                    Debug.Log("[GameManager] Initialized");
+                }
+
+                public void PauseGame()
+                {
+                    isPaused = true;
+                    Time.timeScale = 0f;
+                    OnPauseChanged?.Invoke(true);
+                }
+
+                public void ResumeGame()
+                {
+                    isPaused = false;
+                    Time.timeScale = 1f;
+                    OnPauseChanged?.Invoke(false);
+                }
+
+                public void LoadScene(string sceneName)
+                {
+                    SceneManager.LoadScene(sceneName);
+                }
+
+                public void QuitGame()
+                {
+                    OnGameEnded?.Invoke();
+                    #if UNITY_EDITOR
+                    UnityEditor.EditorApplication.isPlaying = false;
+                    #else
+                    Application.Quit();
+                    #endif
+                }
+            }
+        }
+    on_error: continue
+
+  # Step 5: Create Audio Manager
+  - name: create-audio-manager
+    description: Create audio management system
+    tool: unity_script_create
+    params:
+      name: AudioManager
+      path: "Assets/_Project/Scripts/Core"
+      namespace: "{{projectName}}.Core"
+      content: |
+        using System;
+        using System.Collections.Generic;
+        using UnityEngine;
+        using UnityEngine.Audio;
+
+        namespace {{projectName}}.Core
+        {
+            /// <summary>
+            /// Manages all audio in the game.
+            /// </summary>
+            public class AudioManager : MonoBehaviour
+            {
+                public static AudioManager Instance { get; private set; }
+
+                [Header("Audio Sources")]
+                [SerializeField] private AudioSource musicSource;
+                [SerializeField] private AudioSource sfxSource;
+                
+                [Header("Settings")]
+                [Range(0f, 1f)]
+                [SerializeField] private float masterVolume = 1f;
+                [Range(0f, 1f)]
+                [SerializeField] private float musicVolume = 1f;
+                [Range(0f, 1f)]
+                [SerializeField] private float sfxVolume = 1f;
+
+                private void Awake()
+                {
+                    if (Instance != null && Instance != this)
+                    {
+                        Destroy(gameObject);
+                        return;
+                    }
+                    
+                    Instance = this;
+                    DontDestroyOnLoad(gameObject);
+                    
+                    SetupAudioSources();
+                }
+
+                private void SetupAudioSources()
+                {
+                    if (musicSource == null)
+                    {
+                        var musicObj = new GameObject("MusicSource");
+                        musicObj.transform.SetParent(transform);
+                        musicSource = musicObj.AddComponent<AudioSource>();
+                        musicSource.loop = true;
+                    }
+                    
+                    if (sfxSource == null)
+                    {
+                        var sfxObj = new GameObject("SFXSource");
+                        sfxObj.transform.SetParent(transform);
+                        sfxSource = sfxObj.AddComponent<AudioSource>();
+                    }
+                }
+
+                public void PlayMusic(AudioClip clip)
+                {
+                    if (musicSource.clip == clip) return;
+                    
+                    musicSource.clip = clip;
+                    musicSource.volume = musicVolume * masterVolume;
+                    musicSource.Play();
+                }
+
+                public void PlaySFX(AudioClip clip)
+                {
+                    sfxSource.PlayOneShot(clip, sfxVolume * masterVolume);
+                }
+
+                public void SetMasterVolume(float volume)
+                {
+                    masterVolume = Mathf.Clamp01(volume);
+                    UpdateVolumes();
+                }
+
+                public void SetMusicVolume(float volume)
+                {
+                    musicVolume = Mathf.Clamp01(volume);
+                    musicSource.volume = musicVolume * masterVolume;
+                }
+
+                public void SetSFXVolume(float volume)
+                {
+                    sfxVolume = Mathf.Clamp01(volume);
+                }
+
+                private void UpdateVolumes()
+                {
+                    musicSource.volume = musicVolume * masterVolume;
+                }
+            }
+        }
+    on_error: continue
+
+  # Step 6: Create main scene
+  - name: create-main-scene
+    description: Create and save the main game scene
+    tool: unity_scene_create
+    params:
+      name: MainMenu
+      saveCurrent: true
+      template: "{{gameType}}"
+    on_error: continue
+
+  # Step 7: Refresh asset database
+  - name: refresh-assets
+    description: Refresh asset database to compile scripts
+    tool: unity_asset_refresh
+    on_error: continue
+
+completion:
+  message: |
+    Project "{{projectName}}" has been set up successfully!
+    
+    Created:
+    - Standard folder structure in Assets/_Project
+    - GameManager singleton script
+    - AudioManager script
+    - MainMenu scene
+    
+    Next steps:
+    1. Wait for scripts to compile
+    2. Create a GameManager prefab
+    3. Set up your first gameplay scene
+    4. Import your assets into the appropriate folders
