@@ -21,9 +21,6 @@
     "url": "https://github.com/longanisainhertaco"
   },
   "type": "tool",
-  "dependencies": {
-    "com.unity.editorcoroutines": "1.0.0"
-  },
   "samples": [
     {
       "displayName": "Example Workflows",
