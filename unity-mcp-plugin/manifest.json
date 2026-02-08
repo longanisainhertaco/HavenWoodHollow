@@ -132,8 +132,8 @@
       },
       "serverPort": {
         "type": "number",
-        "description": "Port for the Unity Bridge WebSocket server",
-        "default": 8080
+        "description": "Port for the Unity Bridge TCP server",
+        "default": 8090
       },
       "autoConnect": {
         "type": "boolean",

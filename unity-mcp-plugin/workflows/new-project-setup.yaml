@@ -111,20 +111,28 @@ steps:
     on_error: continue
     
   # Step 4: Create Game Manager script
+  # Note: Claude should sanitize projectName for use as namespace (replace spaces/special chars)
   - name: create-game-manager
-    description: Create the main game manager singleton
+    description: |
+      Create the main game manager singleton.
+      IMPORTANT: When using projectName as namespace, Claude should:
+      - Replace spaces with nothing or underscores
+      - Remove special characters
+      - Ensure it starts with a letter
+      - Use PascalCase (e.g., "My Game" -> "MyGame")
     tool: unity_script_create
     params:
       name: GameManager
       path: "Assets/_Project/Scripts/Core"
-      namespace: "{{projectName}}.Core"
+      # namespace should be sanitized version of projectName + ".Core"
       template: MonoBehaviour
       content: |
         using System;
         using UnityEngine;
         using UnityEngine.SceneManagement;
 
-        namespace {{projectName}}.Core
+        // Note: Replace [ProjectNamespace] with sanitized project name
+        namespace [ProjectNamespace].Core
         {
             /// <summary>
             /// Main game manager singleton. Persists across scenes.
@@ -194,20 +202,24 @@ steps:
     on_error: continue
 
   # Step 5: Create Audio Manager
+  # Note: Claude should sanitize projectName for use as namespace
   - name: create-audio-manager
-    description: Create audio management system
+    description: |
+      Create audio management system.
+      IMPORTANT: Sanitize projectName for namespace (same as GameManager)
     tool: unity_script_create
     params:
       name: AudioManager
       path: "Assets/_Project/Scripts/Core"
-      namespace: "{{projectName}}.Core"
+      # namespace should be sanitized version of projectName + ".Core"
       content: |
         using System;
         using System.Collections.Generic;
         using UnityEngine;
         using UnityEngine.Audio;
 
-        namespace {{projectName}}.Core
+        // Note: Replace [ProjectNamespace] with sanitized project name
+        namespace [ProjectNamespace].Core
         {
             /// <summary>
             /// Manages all audio in the game.

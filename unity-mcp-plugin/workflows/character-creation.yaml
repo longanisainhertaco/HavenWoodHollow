@@ -1,5 +1,5 @@
 name: character-creation
-description: Creates a playable character with movement, animation controller, and basic components
+description: Creates a playable character with movement, animation controller, and basic components. Note - this workflow provides templates that Claude should interpret and generate appropriate code for.
 version: "1.0"
 
 prerequisites:
@@ -37,172 +37,46 @@ parameters:
     default: 100
     description: Maximum health for the character
 
+# Note: This workflow is a template for Claude to follow.
+# Claude should interpret the parameters and generate appropriate code.
+# The content fields below are examples - Claude should adapt them based on movementType.
+
 steps:
   # Step 1: Create character GameObject
   - name: create-character-object
     description: Create the main character GameObject
     tool: unity_gameobject_create
     params:
-      name: "{{characterName}}"
+      name: "[characterName]"
       primitiveType: capsule
       position:
         x: 0
         y: 1
         z: 0
-      tag: "{{characterType}}"
+      tag: "[characterType]"
     on_error: abort
 
   # Step 2: Create movement script based on type
+  # Claude should generate the appropriate script content based on movementType
   - name: create-movement-script
-    description: Create the appropriate movement controller script
+    description: |
+      Create the appropriate movement controller script.
+      The script content should be generated based on the movementType parameter:
+      - TopDown2D: Use Rigidbody2D, WASD movement on X/Y plane
+      - Platformer2D: Use Rigidbody2D, horizontal movement + jumping
+      - FirstPerson3D: Use CharacterController, WASD + mouse look
+      - ThirdPerson3D: Use CharacterController, WASD + camera-relative movement
+      - PointAndClick: Use NavMeshAgent or transform movement to clicked position
     tool: unity_script_create
     params:
-      name: "{{characterName}}Controller"
+      name: "[characterName]Controller"
       path: "Assets/_Project/Scripts/Gameplay"
-      content: |
-        using System;
-        using UnityEngine;
-
-        /// <summary>
-        /// Controls {{characterName}} movement and input.
-        /// Movement Type: {{movementType}}
-        /// </summary>
-        public class {{characterName}}Controller : MonoBehaviour
-        {
-            [Header("Movement Settings")]
-            [SerializeField] private float moveSpeed = 5f;
-            [SerializeField] private float rotationSpeed = 720f;
-            {% if movementType == "Platformer2D" or movementType == "FirstPerson3D" or movementType == "ThirdPerson3D" %}
-            [SerializeField] private float jumpForce = 10f;
-            [SerializeField] private LayerMask groundLayer;
-            {% endif %}
-
-            [Header("Components")]
-            {% if movementType contains "2D" %}
-            private Rigidbody2D rb;
-            {% else %}
-            private CharacterController characterController;
-            private Rigidbody rb;
-            {% endif %}
-            
-            private Vector3 moveDirection;
-            private bool isGrounded;
-            
-            {% if movementType == "FirstPerson3D" or movementType == "ThirdPerson3D" %}
-            private float verticalVelocity;
-            private const float Gravity = -9.81f;
-            {% endif %}
-
-            private void Awake()
-            {
-                {% if movementType contains "2D" %}
-                rb = GetComponent<Rigidbody2D>();
-                if (rb == null) rb = gameObject.AddComponent<Rigidbody2D>();
-                {% else %}
-                characterController = GetComponent<CharacterController>();
-                if (characterController == null) characterController = gameObject.AddComponent<CharacterController>();
-                {% endif %}
-            }
-
-            private void Update()
-            {
-                HandleInput();
-                {% if movementType == "TopDown2D" or movementType == "PointAndClick" %}
-                HandleMovement2D();
-                {% else %}
-                HandleMovement();
-                {% endif %}
-            }
-
-            private void HandleInput()
-            {
-                {% if movementType == "TopDown2D" %}
-                float horizontal = Input.GetAxisRaw("Horizontal");
-                float vertical = Input.GetAxisRaw("Vertical");
-                moveDirection = new Vector3(horizontal, vertical, 0).normalized;
-                {% elif movementType == "Platformer2D" %}
-                float horizontal = Input.GetAxisRaw("Horizontal");
-                moveDirection = new Vector3(horizontal, 0, 0);
-                
-                if (Input.GetButtonDown("Jump") && isGrounded)
-                {
-                    rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-                }
-                {% elif movementType == "FirstPerson3D" or movementType == "ThirdPerson3D" %}
-                float horizontal = Input.GetAxisRaw("Horizontal");
-                float vertical = Input.GetAxisRaw("Vertical");
-                moveDirection = transform.right * horizontal + transform.forward * vertical;
-                moveDirection = moveDirection.normalized;
-                
-                // Handle jumping
-                isGrounded = characterController.isGrounded;
-                if (isGrounded && verticalVelocity < 0)
-                {
-                    verticalVelocity = -2f;
-                }
-                
-                if (Input.GetButtonDown("Jump") && isGrounded)
-                {
-                    verticalVelocity = Mathf.Sqrt(jumpForce * -2f * Gravity);
-                }
-                
-                verticalVelocity += Gravity * Time.deltaTime;
-                {% elif movementType == "PointAndClick" %}
-                if (Input.GetMouseButtonDown(0))
-                {
-                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                    if (Physics.Raycast(ray, out RaycastHit hit))
-                    {
-                        moveDirection = (hit.point - transform.position).normalized;
-                        moveDirection.y = 0;
-                    }
-                }
-                {% endif %}
-            }
-
-            {% if movementType == "TopDown2D" or movementType == "Platformer2D" %}
-            private void HandleMovement2D()
-            {
-                {% if movementType == "TopDown2D" %}
-                rb.velocity = moveDirection * moveSpeed;
-                {% else %}
-                rb.velocity = new Vector2(moveDirection.x * moveSpeed, rb.velocity.y);
-                {% endif %}
-                
-                // Flip sprite based on direction
-                if (moveDirection.x != 0)
-                {
-                    transform.localScale = new Vector3(
-                        Mathf.Sign(moveDirection.x) * Mathf.Abs(transform.localScale.x),
-                        transform.localScale.y,
-                        transform.localScale.z
-                    );
-                }
-            }
-            {% else %}
-            private void HandleMovement()
-            {
-                {% if movementType == "FirstPerson3D" or movementType == "ThirdPerson3D" %}
-                Vector3 move = moveDirection * moveSpeed + Vector3.up * verticalVelocity;
-                characterController.Move(move * Time.deltaTime);
-                {% else %}
-                transform.position += moveDirection * moveSpeed * Time.deltaTime;
-                {% endif %}
-                
-                // Rotate towards movement direction
-                if (moveDirection.magnitude > 0.1f)
-                {
-                    Quaternion targetRotation = Quaternion.LookRotation(new Vector3(moveDirection.x, 0, moveDirection.z));
-                    transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-                }
-            }
-            {% endif %}
-        }
+      # Claude generates content based on movementType
     on_error: continue
 
   # Step 3: Create health system if requested
   - name: create-health-script
-    condition: "{{hasHealthSystem}}"
+    condition: "[hasHealthSystem] == true"
     description: Create health and damage system
     tool: unity_script_create
     params:
@@ -218,7 +92,7 @@ steps:
         public class HealthSystem : MonoBehaviour
         {
             [Header("Health Settings")]
-            [SerializeField] private float maxHealth = {{maxHealth}};
+            [SerializeField] private float maxHealth = 100f;
             [SerializeField] private float currentHealth;
             [SerializeField] private bool isInvulnerable;
             
@@ -231,7 +105,7 @@ steps:
             public bool IsAlive => currentHealth > 0;
             public bool IsInvulnerable => isInvulnerable;
             
-            public event Action<float, float> OnHealthChanged; // current, max
+            public event Action<float, float> OnHealthChanged;
             public event Action<float> OnDamageTaken;
             public event Action<float> OnHealed;
             public event Action OnDeath;
@@ -275,18 +149,6 @@ steps:
                 isInvulnerable = invulnerable;
             }
 
-            public void SetInvulnerableForDuration()
-            {
-                StartCoroutine(InvulnerabilityCoroutine());
-            }
-
-            private System.Collections.IEnumerator InvulnerabilityCoroutine()
-            {
-                isInvulnerable = true;
-                yield return new WaitForSeconds(invulnerabilityDuration);
-                isInvulnerable = false;
-            }
-
             private void Die()
             {
                 OnDeath?.Invoke();
@@ -303,11 +165,11 @@ steps:
 
   # Step 4: Add components to character
   - name: add-character-controller
-    description: Add CharacterController or Rigidbody2D component
+    description: Add CharacterController or Rigidbody2D component based on movement type
     tool: unity_component_add
     params:
-      target: "{{characterName}}"
-      componentType: "{% if movementType contains '2D' %}Rigidbody2D{% else %}CharacterController{% endif %}"
+      target: "[characterName]"
+      # componentType depends on movementType - 2D uses Rigidbody2D, 3D uses CharacterController
     on_error: continue
 
   # Step 5: Attach scripts to character
@@ -315,16 +177,16 @@ steps:
     description: Attach the movement controller script
     tool: unity_component_add
     params:
-      target: "{{characterName}}"
-      componentType: "{{characterName}}Controller"
+      target: "[characterName]"
+      componentType: "[characterName]Controller"
     on_error: continue
 
   - name: attach-health-script
-    condition: "{{hasHealthSystem}}"
+    condition: "[hasHealthSystem] == true"
     description: Attach the health system script
     tool: unity_component_add
     params:
-      target: "{{characterName}}"
+      target: "[characterName]"
       componentType: HealthSystem
     on_error: continue
 
@@ -333,7 +195,7 @@ steps:
     description: Save character as a prefab
     tool: unity_prefab_create
     params:
-      target: "{{characterName}}"
+      target: "[characterName]"
       path: "Assets/_Project/Prefabs/Characters"
     on_error: continue
 
@@ -345,14 +207,12 @@ steps:
 
 completion:
   message: |
-    Character "{{characterName}}" created successfully!
+    Character "[characterName]" created successfully!
     
     Created:
-    - {{characterName}} GameObject with Capsule mesh
-    - {{characterName}}Controller script ({{movementType}} movement)
-    {% if hasHealthSystem %}
-    - HealthSystem script ({{maxHealth}} max health)
-    {% endif %}
+    - [characterName] GameObject with Capsule mesh
+    - [characterName]Controller script ([movementType] movement)
+    - HealthSystem script (if hasHealthSystem is true)
     - Prefab saved to Assets/_Project/Prefabs/Characters
     
     Next steps:
@@ -361,3 +221,47 @@ completion:
     3. Set up animations
     4. Configure colliders and physics layers
     5. Test the character in Play mode
+
+# Movement Type Templates
+# These are reference templates for Claude to use when generating scripts
+
+movement_templates:
+  TopDown2D:
+    description: "2D top-down movement using Rigidbody2D"
+    component: "Rigidbody2D"
+    features:
+      - WASD/Arrow key movement
+      - 8-directional movement
+      - Sprite flip for direction
+
+  Platformer2D:
+    description: "2D platformer with jumping using Rigidbody2D"
+    component: "Rigidbody2D"
+    features:
+      - Horizontal movement
+      - Jumping with ground check
+      - Gravity from Rigidbody2D
+
+  FirstPerson3D:
+    description: "First-person 3D movement using CharacterController"
+    component: "CharacterController"
+    features:
+      - WASD movement relative to camera
+      - Mouse look (requires separate script)
+      - Jumping with gravity
+
+  ThirdPerson3D:
+    description: "Third-person 3D movement using CharacterController"
+    component: "CharacterController"
+    features:
+      - Camera-relative movement
+      - Character rotation towards movement
+      - Jumping with gravity
+
+  PointAndClick:
+    description: "Point and click movement"
+    component: "NavMeshAgent or Transform"
+    features:
+      - Click to move
+      - Pathfinding (if NavMesh)
+      - Smooth movement
