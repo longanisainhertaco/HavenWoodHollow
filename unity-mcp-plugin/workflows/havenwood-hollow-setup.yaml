@@ -1,0 +1,231 @@
+name: havenwood-hollow-setup
+description: |
+  Initialize the Havenwood Hollow game project in Unity 6 with all core systems.
+  Sets up the Gothic Horror farming RPG foundation as defined in Plan.md.
+version: "1.0"
+
+prerequisites:
+  - Unity 6 Editor is running with URP 2D Renderer configured
+  - MCP Bridge is connected
+  - Game scripts from game/Assets/_Project/Scripts are copied into the Unity project
+
+parameters:
+  - name: projectPath
+    type: string
+    required: true
+    description: Path to the Unity project
+
+steps:
+  # Step 1: Verify connection
+  - name: verify-connection
+    description: Ensure we're connected to Unity
+    tool: unity_status
+    on_error: abort
+
+  # Step 2: Create Havenwood Hollow folder structure
+  - name: create-folders
+    description: Create game-specific folder structure
+    sequence:
+      - tool: unity_folder_create
+        params:
+          path: "Assets/_Project/Scripts/Core"
+      - tool: unity_folder_create
+        params:
+          path: "Assets/_Project/Scripts/Player"
+      - tool: unity_folder_create
+        params:
+          path: "Assets/_Project/Scripts/Farming"
+      - tool: unity_folder_create
+        params:
+          path: "Assets/_Project/Scripts/Inventory"
+      - tool: unity_folder_create
+        params:
+          path: "Assets/_Project/Scripts/AI/GOAP"
+      - tool: unity_folder_create
+        params:
+          path: "Assets/_Project/Scripts/Creatures"
+      - tool: unity_folder_create
+        params:
+          path: "Assets/_Project/Scripts/Stealth"
+      - tool: unity_folder_create
+        params:
+          path: "Assets/_Project/Scripts/Visual"
+      - tool: unity_folder_create
+        params:
+          path: "Assets/_Project/ScriptableObjects/Crops"
+      - tool: unity_folder_create
+        params:
+          path: "Assets/_Project/ScriptableObjects/Items"
+      - tool: unity_folder_create
+        params:
+          path: "Assets/_Project/ScriptableObjects/Creatures"
+      - tool: unity_folder_create
+        params:
+          path: "Assets/_Project/Prefabs/Characters"
+      - tool: unity_folder_create
+        params:
+          path: "Assets/_Project/Prefabs/Environment"
+      - tool: unity_folder_create
+        params:
+          path: "Assets/_Project/Prefabs/Items"
+      - tool: unity_folder_create
+        params:
+          path: "Assets/_Project/Scenes/Levels"
+      - tool: unity_folder_create
+        params:
+          path: "Assets/_Project/Shaders"
+      - tool: unity_folder_create
+        params:
+          path: "Assets/_Project/Animations"
+      - tool: unity_folder_create
+        params:
+          path: "Assets/_Project/Audio/Music"
+      - tool: unity_folder_create
+        params:
+          path: "Assets/_Project/Audio/SFX"
+      - tool: unity_folder_create
+        params:
+          path: "Assets/_Project/Textures"
+    on_error: continue
+
+  # Step 3: Create core scene with managers
+  - name: create-main-scene
+    description: Create the Havenwood Hollow main game scene
+    tool: unity_scene_create
+    params:
+      name: HavenwoodHollow_Main
+      saveCurrent: true
+      template: 2D-TopDown
+    on_error: continue
+
+  # Step 4: Set up Game Manager
+  - name: setup-game-manager
+    description: Create GameManager singleton in scene
+    sequence:
+      - tool: unity_gameobject_create
+        params:
+          name: "[GameManager]"
+          primitiveType: empty
+          components:
+            - type: HavenwoodHollow.Core.GameManager
+      - tool: unity_gameobject_create
+        params:
+          name: "[TimeManager]"
+          primitiveType: empty
+          parent: "[GameManager]"
+          components:
+            - type: HavenwoodHollow.Core.TimeManager
+    on_error: continue
+
+  # Step 5: Set up 2D Lighting (URP)
+  - name: setup-lighting
+    description: |
+      Create the Global Light 2D for day/night cycle.
+      Reference: Plan Section 5.1.1
+    sequence:
+      - tool: unity_gameobject_create
+        params:
+          name: GlobalLight2D
+          primitiveType: empty
+          components:
+            - type: UnityEngine.Rendering.Universal.Light2D
+              properties:
+                lightType: 1  # Global
+                intensity: 1.0
+                color: { r: 1, g: 1, b: 1, a: 1 }
+    on_error: continue
+
+  # Step 6: Create Player
+  - name: setup-player
+    description: |
+      Create player with Kinematic Rigidbody2D controller.
+      Reference: Plan Section 3.1.2
+    sequence:
+      - tool: unity_gameobject_create
+        params:
+          name: Player
+          primitiveType: empty
+          tag: Player
+          components:
+            - type: SpriteRenderer
+            - type: Rigidbody2D
+              properties:
+                bodyType: 2  # Kinematic
+                collisionDetectionMode: 1  # Continuous
+                interpolation: 1  # Interpolate
+            - type: BoxCollider2D
+            - type: HavenwoodHollow.Player.PlayerController
+    on_error: continue
+
+  # Step 7: Set up Farming system
+  - name: setup-farming
+    description: |
+      Create CropManager with Tilemap reference.
+      Reference: Plan Section 3.2.2
+    sequence:
+      - tool: unity_gameobject_create
+        params:
+          name: "[CropManager]"
+          primitiveType: empty
+          components:
+            - type: HavenwoodHollow.Farming.CropManager
+    on_error: continue
+
+  # Step 8: Set up Creature Breeding
+  - name: setup-breeding
+    description: |
+      Create BreedingSystem manager.
+      Reference: Plan Section 6.2
+    sequence:
+      - tool: unity_gameobject_create
+        params:
+          name: "[BreedingSystem]"
+          primitiveType: empty
+          components:
+            - type: HavenwoodHollow.Creatures.BreedingSystem
+    on_error: continue
+
+  # Step 9: Set up Stealth system
+  - name: setup-stealth
+    description: |
+      Create StealthSystem for light-based stealth.
+      Reference: Plan Section 5.2
+    sequence:
+      - tool: unity_gameobject_create
+        params:
+          name: "[StealthSystem]"
+          primitiveType: empty
+          components:
+            - type: HavenwoodHollow.Stealth.StealthSystem
+    on_error: continue
+
+  # Step 10: Refresh
+  - name: refresh-assets
+    description: Refresh asset database to compile scripts
+    tool: unity_asset_refresh
+    on_error: continue
+
+completion:
+  message: |
+    Havenwood Hollow project foundation has been set up!
+
+    Created Systems:
+    - GameManager (Core singleton)
+    - TimeManager (Day/Night cycle with URP 2D Global Light)
+    - PlayerController (Kinematic Rigidbody2D movement)
+    - CropManager (Dictionary-based agricultural simulation)
+    - BreedingSystem (Bitwise genetic inheritance)
+    - StealthSystem (Light-based stealth mechanics)
+
+    Interfaces Available:
+    - IInteractable, ITool, IConsumable, IDamageable
+
+    GOAP AI Available:
+    - GOAPAgent, GOAPAction, GOAPGoal, GOAPPlanner, WorldState
+
+    Next Steps (per Plan.md Phase 1):
+    1. Configure the Global Light 2D reference in TimeManager
+    2. Create crop ScriptableObjects (Parsnip, Potato, etc.)
+    3. Set up Tilemap for the farm area with CompositeCollider2D
+    4. Create NPC with GOAP Agent and Village Guard configuration
+    5. Import/generate Gothic pixel art assets
