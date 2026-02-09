@@ -33,7 +33,23 @@ Unity's domain reload (when scripts recompile) kills all connections. The extern
 
 ## Installation
 
-### 1. Install Unity Package
+### macOS Quick Setup
+
+For macOS, use the automated setup scripts:
+
+```bash
+chmod +x scripts/*.sh
+./scripts/setup-mac.sh                                # Install deps & build
+./scripts/configure-claude-desktop.sh                  # Register with Claude
+./scripts/install-unity-package.sh /path/to/Project    # Install Unity package
+./scripts/verify-installation.sh                       # Verify everything
+```
+
+See [`scripts/README.md`](../scripts/README.md) for full script documentation.
+
+### Manual Installation
+
+#### 1. Install Unity Package
 
 Copy the `unity-package` folder into your Unity project:
 
@@ -46,7 +62,7 @@ cp -r unity-mcp-plugin/unity-package YourUnityProject/Packages/com.havenwoodholl
 # Enter: https://github.com/longanisainhertaco/HavenWoodHollow.git?path=unity-mcp-plugin/unity-package
 ```
 
-### 2. Build the MCP Server
+#### 2. Build the MCP Server
 
 ```bash
 cd unity-mcp-plugin/server
@@ -54,7 +70,7 @@ npm install
 npm run build
 ```
 
-### 3. Configure Claude Desktop
+#### 3. Configure Claude Desktop
 
 Add to your `claude_desktop_config.json`:
 
@@ -86,7 +102,7 @@ Or use the MCPB bundle format by creating:
 }
 ```
 
-### 4. Start Using
+#### 4. Start Using
 
 1. Open your Unity project
 2. The MCP Bridge starts automatically (check Console for "MCP Bridge Initialized")
