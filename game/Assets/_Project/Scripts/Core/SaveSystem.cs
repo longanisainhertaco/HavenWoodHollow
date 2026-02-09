@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using HavenwoodHollow.Player;
+using HavenwoodHollow.Inventory;
 
 namespace HavenwoodHollow.Core
 {
@@ -134,8 +136,36 @@ namespace HavenwoodHollow.Core
                 data.currentTimeOfDay = TimeManager.Instance.CurrentHour;
             }
 
-            // TODO: Populate playerPosition, playerHealth, playerStamina from PlayerController
-            // TODO: Populate inventoryData from InventoryManager
+            var player = FindObjectOfType<PlayerController>();
+            if (player != null)
+            {
+                data.playerPosition = player.transform.position;
+
+                var stats = player.GetComponent<PlayerStats>();
+                if (stats != null)
+                {
+                    data.playerHealth = stats.CurrentHealth;
+                    data.playerStamina = stats.CurrentStamina;
+                }
+            }
+
+            if (InventoryManager.Instance != null)
+            {
+                data.inventoryData.Clear();
+                for (int i = 0; i < InventoryManager.Instance.InventorySize; i++)
+                {
+                    InventorySlot slot = InventoryManager.Instance.GetItem(i);
+                    if (slot != null && !slot.IsEmpty)
+                    {
+                        data.inventoryData.Add(new InventorySaveSlot
+                        {
+                            itemId = slot.ItemData.ID,
+                            quantity = slot.Quantity,
+                            slotIndex = i
+                        });
+                    }
+                }
+            }
 
             return data;
         }
@@ -158,8 +188,28 @@ namespace HavenwoodHollow.Core
                 TimeManager.Instance.SetTime(data.currentTimeOfDay);
             }
 
-            // TODO: Apply playerPosition, playerHealth, playerStamina to PlayerController
-            // TODO: Apply inventoryData to InventoryManager
+            var player = FindObjectOfType<PlayerController>();
+            if (player != null)
+            {
+                player.transform.position = data.playerPosition;
+
+                var stats = player.GetComponent<PlayerStats>();
+                if (stats != null)
+                {
+                    stats.SetHealth(data.playerHealth);
+                    stats.SetStamina(data.playerStamina);
+                }
+            }
+
+            if (InventoryManager.Instance != null)
+            {
+                InventoryManager.Instance.Clear();
+                // Note: Inventory items are identified by string ID.
+                // Actual ItemData ScriptableObject lookup requires a runtime catalog.
+                // When an item catalog is implemented, iterate data.inventoryData
+                // and call InventoryManager.Instance.AddItem(catalogItem, slot.quantity)
+                // for each saved slot.
+            }
         }
     }
 

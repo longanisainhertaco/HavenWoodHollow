@@ -135,8 +135,20 @@ namespace HavenwoodHollow.Crafting
 
             if (!added)
             {
-                Debug.LogWarning($"[CraftingManager] Inventory full, could not add '{recipe.OutputItem.DisplayName}'.");
-                // Ingredients already consumed — design decision: refund or drop on ground
+                Debug.LogWarning($"[CraftingManager] Inventory full, refunding ingredients for '{recipe.OutputItem.DisplayName}'.");
+                for (int j = 0; j < recipe.Ingredients.Length; j++)
+                {
+                    var refund = recipe.Ingredients[j];
+                    if (refund.item != null)
+                    {
+                        bool refunded = inventory.AddItem(refund.item, refund.quantity);
+                        if (!refunded)
+                        {
+                            Debug.LogError($"[CraftingManager] Failed to refund {refund.quantity}x {refund.item.DisplayName}. Items may be lost.");
+                        }
+                    }
+                }
+                return false;
             }
 
             OnItemCrafted?.Invoke(recipe);

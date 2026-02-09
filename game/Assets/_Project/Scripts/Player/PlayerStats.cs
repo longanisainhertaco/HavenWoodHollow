@@ -166,6 +166,27 @@ namespace HavenwoodHollow.Player
         }
 
         /// <summary>
+        /// Sets health to a specific value, clamped between 0 and max.
+        /// Used by SaveSystem to restore saved health.
+        /// </summary>
+        public void SetHealth(float value)
+        {
+            currentHealth = Mathf.Clamp(value, 0f, maxHealth);
+            OnHealthChanged?.Invoke(currentHealth, maxHealth);
+            if (!IsAlive) OnDied?.Invoke();
+        }
+
+        /// <summary>
+        /// Sets stamina to a specific value, clamped between 0 and max.
+        /// Used by SaveSystem to restore saved stamina.
+        /// </summary>
+        public void SetStamina(float value)
+        {
+            currentStamina = Mathf.Clamp(value, 0f, maxStamina);
+            OnStaminaChanged?.Invoke(currentStamina, maxStamina);
+        }
+
+        /// <summary>
         /// Fully restores health and stamina to maximum values.
         /// </summary>
         public void RestoreAllStats()
