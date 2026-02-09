@@ -14,7 +14,8 @@ namespace HavenwoodHollow.Core
         public static TimeManager Instance { get; private set; }
 
         [Header("Time Settings")]
-        [SerializeField] private float dayLengthInSeconds = 600f;
+        [Tooltip("Real-time seconds per in-game day. 840 = 14 minutes (Stardew Valley standard).")]
+        [SerializeField] private float dayLengthInSeconds = 840f;
         [SerializeField] private float startHour = 6f;
         [Tooltip("Current time expressed as hours (0-24)")]
         [SerializeField] private float currentTimeOfDay;
