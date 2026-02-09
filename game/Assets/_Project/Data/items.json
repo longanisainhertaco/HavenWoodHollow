@@ -155,6 +155,33 @@
       "sellPrice": 35
     },
     {
+      "id": "crop_witchcabbage",
+      "displayName": "Witch's Cabbage",
+      "description": "Purple spiral leaves with a bitter, magical taste. Used in alchemy.",
+      "category": "Crop",
+      "maxStackSize": 99,
+      "buyPrice": 0,
+      "sellPrice": 85
+    },
+    {
+      "id": "crop_ghoulpepper",
+      "displayName": "Ghoul Pepper",
+      "description": "A fiery orange pepper that glows with inner heat. Handle with gloves.",
+      "category": "Crop",
+      "maxStackSize": 99,
+      "buyPrice": 0,
+      "sellPrice": 110
+    },
+    {
+      "id": "crop_moonpotato",
+      "displayName": "Moon Potato",
+      "description": "A luminescent pale tuber that glows softly under moonlight.",
+      "category": "Crop",
+      "maxStackSize": 99,
+      "buyPrice": 0,
+      "sellPrice": 70
+    },
+    {
       "id": "tool_hoe",
       "displayName": "Hoe",
       "description": "Tills soil for planting.",
