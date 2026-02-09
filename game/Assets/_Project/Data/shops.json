@@ -1,0 +1,79 @@
+{
+  "_comment": "Shop and NPC merchant definitions for Havenwood Hollow. Use to create ShopData ScriptableObjects.",
+  "shops": [
+    {
+      "id": "shop_general",
+      "shopName": "Hollow General Store",
+      "description": "The village's main supply shop. Run by Old Marta.",
+      "merchantNpcId": "npc_marta",
+      "sellPriceMultiplier": 1.0,
+      "availableSeason": "None",
+      "itemsForSale": [
+        { "itemId": "seed_eternalturnip", "priceOverride": -1, "dailyStock": -1 },
+        { "itemId": "seed_nightshade", "priceOverride": -1, "dailyStock": 10 },
+        { "itemId": "seed_bloodroot", "priceOverride": -1, "dailyStock": 10 },
+        { "itemId": "seed_witchcabbage", "priceOverride": -1, "dailyStock": 10 },
+        { "itemId": "consume_bread", "priceOverride": -1, "dailyStock": 5 },
+        { "itemId": "tool_fishingrod", "priceOverride": -1, "dailyStock": 1 }
+      ]
+    },
+    {
+      "id": "shop_blacksmith",
+      "shopName": "Ironhold Smithy",
+      "description": "Weapons, tools, and ore. Run by Gregor the Blacksmith.",
+      "merchantNpcId": "npc_gregor",
+      "sellPriceMultiplier": 0.8,
+      "availableSeason": "None",
+      "itemsForSale": [
+        { "itemId": "tool_sword", "priceOverride": -1, "dailyStock": 1 },
+        { "itemId": "mat_copperore", "priceOverride": 20, "dailyStock": 20 },
+        { "itemId": "mat_ironore", "priceOverride": 30, "dailyStock": 15 },
+        { "itemId": "mat_copperbar", "priceOverride": -1, "dailyStock": 5 },
+        { "itemId": "mat_ironbar", "priceOverride": -1, "dailyStock": 5 }
+      ]
+    },
+    {
+      "id": "shop_herbalist",
+      "shopName": "The Bitter Root",
+      "description": "Potions, herbs, and arcane ingredients. Run by Elara the Herbalist.",
+      "merchantNpcId": "npc_elara",
+      "sellPriceMultiplier": 1.0,
+      "availableSeason": "None",
+      "itemsForSale": [
+        { "itemId": "consume_healthpotion", "priceOverride": -1, "dailyStock": 5 },
+        { "itemId": "consume_staminapotion", "priceOverride": -1, "dailyStock": 5 },
+        { "itemId": "consume_fertilizer_speed", "priceOverride": -1, "dailyStock": 10 },
+        { "itemId": "consume_fertilizer_quality", "priceOverride": -1, "dailyStock": 5 },
+        { "itemId": "seed_corpselily", "priceOverride": 100, "dailyStock": 3 },
+        { "itemId": "mat_bone", "priceOverride": 20, "dailyStock": 15 }
+      ]
+    },
+    {
+      "id": "shop_summer_seeds",
+      "shopName": "Traveling Seed Merchant",
+      "description": "A mysterious traveler who appears only in Summer with rare seeds.",
+      "merchantNpcId": "npc_traveler",
+      "sellPriceMultiplier": 0.5,
+      "availableSeason": "Summer",
+      "itemsForSale": [
+        { "itemId": "seed_shadowmelon", "priceOverride": -1, "dailyStock": 5 },
+        { "itemId": "seed_ghoulpepper", "priceOverride": -1, "dailyStock": 5 },
+        { "itemId": "seed_corpselily", "priceOverride": 80, "dailyStock": 3 },
+        { "itemId": "mat_eldritchcrystal", "priceOverride": 250, "dailyStock": 2 }
+      ]
+    },
+    {
+      "id": "shop_fall_seeds",
+      "shopName": "Harvest Festival Booth",
+      "description": "Special seeds and goods available only during the Fall festival.",
+      "merchantNpcId": "npc_festival",
+      "sellPriceMultiplier": 0.7,
+      "availableSeason": "Fall",
+      "itemsForSale": [
+        { "itemId": "seed_bonewheat", "priceOverride": -1, "dailyStock": 20 },
+        { "itemId": "seed_gravepumpkin", "priceOverride": -1, "dailyStock": 10 },
+        { "itemId": "seed_moonpotato", "priceOverride": -1, "dailyStock": 10 }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,147 @@
+{
+  "_comment": "Crafting recipe definitions for Havenwood Hollow. Use to create CraftingRecipe ScriptableObjects.",
+  "recipes": [
+    {
+      "id": "recipe_spectral_bread",
+      "displayName": "Spectral Bread",
+      "description": "Bake bone wheat flour into ghostly bread.",
+      "requiredStation": "None",
+      "ingredients": [
+        { "itemId": "crop_bonewheat", "quantity": 3 }
+      ],
+      "outputItemId": "consume_bread",
+      "outputQuantity": 2,
+      "unlockedByDefault": true
+    },
+    {
+      "id": "recipe_health_potion",
+      "displayName": "Health Potion",
+      "description": "Brew blood root into a healing draught.",
+      "requiredStation": "AlchemyTable",
+      "ingredients": [
+        { "itemId": "crop_bloodroot", "quantity": 2 },
+        { "itemId": "crop_nightshade", "quantity": 1 }
+      ],
+      "outputItemId": "consume_healthpotion",
+      "outputQuantity": 1,
+      "unlockedByDefault": false
+    },
+    {
+      "id": "recipe_stamina_elixir",
+      "displayName": "Stamina Elixir",
+      "description": "Distill ghoul peppers into an energizing tonic.",
+      "requiredStation": "AlchemyTable",
+      "ingredients": [
+        { "itemId": "crop_ghoulpepper", "quantity": 2 },
+        { "itemId": "crop_eternalturnip", "quantity": 1 }
+      ],
+      "outputItemId": "consume_staminapotion",
+      "outputQuantity": 1,
+      "unlockedByDefault": false
+    },
+    {
+      "id": "recipe_speed_gro",
+      "displayName": "Speed-Gro Fertilizer",
+      "description": "Mix nightshade and bone to accelerate plant growth.",
+      "requiredStation": "AlchemyTable",
+      "ingredients": [
+        { "itemId": "crop_nightshade", "quantity": 1 },
+        { "itemId": "mat_bone", "quantity": 2 }
+      ],
+      "outputItemId": "consume_fertilizer_speed",
+      "outputQuantity": 3,
+      "unlockedByDefault": true
+    },
+    {
+      "id": "recipe_quality_fertilizer",
+      "displayName": "Quality Fertilizer",
+      "description": "Enrich soil with crystal essence for superior harvests.",
+      "requiredStation": "AlchemyTable",
+      "ingredients": [
+        { "itemId": "mat_eldritchcrystal", "quantity": 1 },
+        { "itemId": "mat_bone", "quantity": 3 }
+      ],
+      "outputItemId": "consume_fertilizer_quality",
+      "outputQuantity": 2,
+      "unlockedByDefault": false
+    },
+    {
+      "id": "recipe_copper_bar",
+      "displayName": "Copper Bar",
+      "description": "Smelt copper ore into a usable ingot.",
+      "requiredStation": "Forge",
+      "ingredients": [
+        { "itemId": "mat_copperore", "quantity": 5 }
+      ],
+      "outputItemId": "mat_copperbar",
+      "outputQuantity": 1,
+      "unlockedByDefault": true
+    },
+    {
+      "id": "recipe_iron_bar",
+      "displayName": "Iron Bar",
+      "description": "Smelt iron ore into a strong ingot.",
+      "requiredStation": "Forge",
+      "ingredients": [
+        { "itemId": "mat_ironore", "quantity": 5 }
+      ],
+      "outputItemId": "mat_ironbar",
+      "outputQuantity": 1,
+      "unlockedByDefault": true
+    },
+    {
+      "id": "recipe_dark_coffee",
+      "displayName": "Dark Coffee",
+      "description": "Brew a strong cup for a temporary speed boost.",
+      "requiredStation": "None",
+      "ingredients": [
+        { "itemId": "crop_nightshade", "quantity": 1 },
+        { "itemId": "crop_eternalturnip", "quantity": 1 }
+      ],
+      "outputItemId": "consume_coffee",
+      "outputQuantity": 1,
+      "unlockedByDefault": true
+    },
+    {
+      "id": "recipe_workbench",
+      "displayName": "Workbench",
+      "description": "A basic crafting station for the farm.",
+      "requiredStation": "None",
+      "ingredients": [
+        { "itemId": "mat_wood", "quantity": 20 },
+        { "itemId": "mat_stone", "quantity": 10 }
+      ],
+      "outputItemId": "furniture_workbench",
+      "outputQuantity": 1,
+      "unlockedByDefault": true
+    },
+    {
+      "id": "recipe_forge",
+      "displayName": "Forge",
+      "description": "An iron forge for smelting and tool upgrades.",
+      "requiredStation": "Workbench",
+      "ingredients": [
+        { "itemId": "mat_stone", "quantity": 30 },
+        { "itemId": "mat_copperbar", "quantity": 5 },
+        { "itemId": "mat_wood", "quantity": 10 }
+      ],
+      "outputItemId": "furniture_forge",
+      "outputQuantity": 1,
+      "unlockedByDefault": true
+    },
+    {
+      "id": "recipe_alchemy_table",
+      "displayName": "Alchemy Table",
+      "description": "A workstation for brewing potions and fertilizers.",
+      "requiredStation": "Workbench",
+      "ingredients": [
+        { "itemId": "mat_wood", "quantity": 15 },
+        { "itemId": "mat_ironbar", "quantity": 3 },
+        { "itemId": "mat_eldritchcrystal", "quantity": 1 }
+      ],
+      "outputItemId": "furniture_alchemytable",
+      "outputQuantity": 1,
+      "unlockedByDefault": false
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "_comment": "Creature species definitions for Havenwood Hollow. Use to create CreatureData ScriptableObjects.",
+  "creatures": [
+    {
+      "id": "creature_shade_hound",
+      "displayName": "Shade Hound",
+      "description": "A spectral wolf-like beast that hunts in darkness. Loyal once tamed.",
+      "baseHealth": 60,
+      "baseAttack": 8,
+      "baseDefense": 4,
+      "moveSpeed": 3.5,
+      "defaultGenome": {
+        "geneA": ["NightVision"],
+        "geneB": []
+      }
+    },
+    {
+      "id": "creature_crystal_beetle",
+      "displayName": "Crystal Beetle",
+      "description": "An armored insect with a shell of living crystal. Hardy and resilient.",
+      "baseHealth": 80,
+      "baseAttack": 4,
+      "baseDefense": 10,
+      "moveSpeed": 1.5,
+      "defaultGenome": {
+        "geneA": ["HardenedScale"],
+        "geneB": []
+      }
+    },
+    {
+      "id": "creature_wraith_moth",
+      "displayName": "Wraith Moth",
+      "description": "An ethereal moth with luminescent wings. Its dust has magical properties.",
+      "baseHealth": 30,
+      "baseAttack": 3,
+      "baseDefense": 2,
+      "moveSpeed": 4.0,
+      "defaultGenome": {
+        "geneA": ["Wings", "Bioluminescence"],
+        "geneB": ["Wings"]
+      }
+    },
+    {
+      "id": "creature_bone_serpent",
+      "displayName": "Bone Serpent",
+      "description": "A skeletal snake animated by dark magic. Its bite carries potent venom.",
+      "baseHealth": 45,
+      "baseAttack": 12,
+      "baseDefense": 3,
+      "moveSpeed": 2.5,
+      "defaultGenome": {
+        "geneA": ["Venomous"],
+        "geneB": []
+      }
+    },
+    {
+      "id": "creature_grave_toad",
+      "displayName": "Grave Toad",
+      "description": "A bloated amphibian found near burial grounds. Its croak wards off spirits.",
+      "baseHealth": 70,
+      "baseAttack": 2,
+      "baseDefense": 6,
+      "moveSpeed": 1.0,
+      "defaultGenome": {
+        "geneA": ["Venomous"],
+        "geneB": ["HardenedScale"]
+      }
+    },
+    {
+      "id": "creature_phantom_cat",
+      "displayName": "Phantom Cat",
+      "description": "A semi-transparent feline that phases through solid objects. Fiercely independent.",
+      "baseHealth": 35,
+      "baseAttack": 6,
+      "baseDefense": 2,
+      "moveSpeed": 4.5,
+      "defaultGenome": {
+        "geneA": ["ShadowForm"],
+        "geneB": ["NightVision"]
+      }
+    },
+    {
+      "id": "creature_iron_raven",
+      "displayName": "Iron Raven",
+      "description": "A metallic bird that sparks when it flaps. Can scout distant areas.",
+      "baseHealth": 25,
+      "baseAttack": 5,
+      "baseDefense": 7,
+      "moveSpeed": 5.0,
+      "defaultGenome": {
+        "geneA": ["Wings", "HardenedScale"],
+        "geneB": ["Wings"]
+      }
+    },
+    {
+      "id": "creature_mire_salamander",
+      "displayName": "Mire Salamander",
+      "description": "A luminous amphibian from the deep swamps. Its skin secretes healing mucus.",
+      "baseHealth": 50,
+      "baseAttack": 3,
+      "baseDefense": 5,
+      "moveSpeed": 2.0,
+      "defaultGenome": {
+        "geneA": ["Bioluminescence"],
+        "geneB": ["Venomous"]
+      }
+    },
+    {
+      "id": "creature_elder_owl",
+      "displayName": "Elder Owl",
+      "description": "An ancient owl with knowing eyes. Said to see the future in its dreams.",
+      "baseHealth": 40,
+      "baseAttack": 7,
+      "baseDefense": 4,
+      "moveSpeed": 3.0,
+      "defaultGenome": {
+        "geneA": ["Wings", "NightVision"],
+        "geneB": ["Wings", "NightVision"]
+      }
+    },
+    {
+      "id": "creature_swamp_leech",
+      "displayName": "Swamp Leech",
+      "description": "A writhing parasite that grows larger as it feeds. Grotesque but useful in alchemy.",
+      "baseHealth": 20,
+      "baseAttack": 1,
+      "baseDefense": 1,
+      "moveSpeed": 0.5,
+      "defaultGenome": {
+        "geneA": [],
+        "geneB": []
+      }
+    }
+  ]
+}

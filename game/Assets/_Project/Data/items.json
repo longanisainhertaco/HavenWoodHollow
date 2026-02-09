@@ -1,0 +1,347 @@
+{
+  "_comment": "Master item database for Havenwood Hollow. Use to create ItemData ScriptableObjects in Unity.",
+  "items": [
+    {
+      "id": "seed_nightshade",
+      "displayName": "Nightshade Seeds",
+      "description": "Dark purple berries grow from these thorny seeds.",
+      "category": "Seed",
+      "maxStackSize": 99,
+      "buyPrice": 30,
+      "sellPrice": 15
+    },
+    {
+      "id": "seed_bloodroot",
+      "displayName": "Blood Root Seeds",
+      "description": "Handle with care. The roots bleed crimson sap when harvested.",
+      "category": "Seed",
+      "maxStackSize": 99,
+      "buyPrice": 25,
+      "sellPrice": 12
+    },
+    {
+      "id": "seed_corpselily",
+      "displayName": "Corpse Lily Bulb",
+      "description": "A putrid but valuable flower. Plant in summer.",
+      "category": "Seed",
+      "maxStackSize": 99,
+      "buyPrice": 80,
+      "sellPrice": 40
+    },
+    {
+      "id": "seed_shadowmelon",
+      "displayName": "Shadow Melon Seeds",
+      "description": "The melons glow faintly from within when ripe.",
+      "category": "Seed",
+      "maxStackSize": 99,
+      "buyPrice": 50,
+      "sellPrice": 25
+    },
+    {
+      "id": "seed_bonewheat",
+      "displayName": "Bone Wheat Kernels",
+      "description": "Skeletal white stalks that rattle in the autumn wind.",
+      "category": "Seed",
+      "maxStackSize": 99,
+      "buyPrice": 20,
+      "sellPrice": 10
+    },
+    {
+      "id": "seed_gravepumpkin",
+      "displayName": "Grave Pumpkin Seeds",
+      "description": "Carve them and they seem to stare back.",
+      "category": "Seed",
+      "maxStackSize": 99,
+      "buyPrice": 60,
+      "sellPrice": 30
+    },
+    {
+      "id": "seed_witchcabbage",
+      "displayName": "Witch's Cabbage Seeds",
+      "description": "Purple spiral leaves with a bitter, magical taste.",
+      "category": "Seed",
+      "maxStackSize": 99,
+      "buyPrice": 35,
+      "sellPrice": 17
+    },
+    {
+      "id": "seed_ghoulpepper",
+      "displayName": "Ghoul Pepper Seeds",
+      "description": "Warning: peppers may spontaneously combust.",
+      "category": "Seed",
+      "maxStackSize": 99,
+      "buyPrice": 45,
+      "sellPrice": 22
+    },
+    {
+      "id": "seed_moonpotato",
+      "displayName": "Moon Potato Eyes",
+      "description": "Luminescent tubers that thrive in cool weather.",
+      "category": "Seed",
+      "maxStackSize": 99,
+      "buyPrice": 30,
+      "sellPrice": 15
+    },
+    {
+      "id": "seed_eternalturnip",
+      "displayName": "Eternal Turnip Seeds",
+      "description": "A hardy turnip that regrows after each harvest.",
+      "category": "Seed",
+      "maxStackSize": 99,
+      "buyPrice": 15,
+      "sellPrice": 7
+    },
+    {
+      "id": "crop_nightshade",
+      "displayName": "Nightshade Berries",
+      "description": "Dark, sweet berries with a faint purple glow.",
+      "category": "Crop",
+      "maxStackSize": 99,
+      "buyPrice": 0,
+      "sellPrice": 75
+    },
+    {
+      "id": "crop_bloodroot",
+      "displayName": "Blood Root",
+      "description": "A crimson root vegetable. Essential for alchemy.",
+      "category": "Crop",
+      "maxStackSize": 99,
+      "buyPrice": 0,
+      "sellPrice": 60
+    },
+    {
+      "id": "crop_corpselily",
+      "displayName": "Corpse Lily",
+      "description": "Beautiful and revolting in equal measure. Very valuable.",
+      "category": "Crop",
+      "maxStackSize": 99,
+      "buyPrice": 0,
+      "sellPrice": 250
+    },
+    {
+      "id": "crop_shadowmelon",
+      "displayName": "Shadow Melon",
+      "description": "A melon with a luminous interior. Tastes of midnight.",
+      "category": "Crop",
+      "maxStackSize": 99,
+      "buyPrice": 0,
+      "sellPrice": 140
+    },
+    {
+      "id": "crop_bonewheat",
+      "displayName": "Bone Wheat",
+      "description": "Brittle white grain. Makes spectral flour.",
+      "category": "Crop",
+      "maxStackSize": 99,
+      "buyPrice": 0,
+      "sellPrice": 45
+    },
+    {
+      "id": "crop_gravepumpkin",
+      "displayName": "Grave Pumpkin",
+      "description": "Massive pumpkin with a natural face-like pattern.",
+      "category": "Crop",
+      "maxStackSize": 99,
+      "buyPrice": 0,
+      "sellPrice": 180
+    },
+    {
+      "id": "crop_eternalturnip",
+      "displayName": "Eternal Turnip",
+      "description": "A plain but reliable root vegetable.",
+      "category": "Crop",
+      "maxStackSize": 99,
+      "buyPrice": 0,
+      "sellPrice": 35
+    },
+    {
+      "id": "tool_hoe",
+      "displayName": "Hoe",
+      "description": "Tills soil for planting.",
+      "category": "Tool",
+      "maxStackSize": 1,
+      "buyPrice": 0,
+      "sellPrice": 0
+    },
+    {
+      "id": "tool_wateringcan",
+      "displayName": "Watering Can",
+      "description": "Waters crops to help them grow.",
+      "category": "Tool",
+      "maxStackSize": 1,
+      "buyPrice": 0,
+      "sellPrice": 0
+    },
+    {
+      "id": "tool_axe",
+      "displayName": "Axe",
+      "description": "Chops trees and large stumps.",
+      "category": "Tool",
+      "maxStackSize": 1,
+      "buyPrice": 0,
+      "sellPrice": 0
+    },
+    {
+      "id": "tool_pickaxe",
+      "displayName": "Pickaxe",
+      "description": "Breaks rocks and mines ore.",
+      "category": "Tool",
+      "maxStackSize": 1,
+      "buyPrice": 0,
+      "sellPrice": 0
+    },
+    {
+      "id": "tool_sword",
+      "displayName": "Rusty Sword",
+      "description": "A battered blade. Better than bare hands.",
+      "category": "Tool",
+      "maxStackSize": 1,
+      "buyPrice": 100,
+      "sellPrice": 50
+    },
+    {
+      "id": "tool_fishingrod",
+      "displayName": "Fishing Rod",
+      "description": "Cast into water to catch fish... or worse.",
+      "category": "Tool",
+      "maxStackSize": 1,
+      "buyPrice": 75,
+      "sellPrice": 35
+    },
+    {
+      "id": "mat_wood",
+      "displayName": "Wood",
+      "description": "Lumber from the forest. A basic building material.",
+      "category": "Material",
+      "maxStackSize": 99,
+      "buyPrice": 10,
+      "sellPrice": 5
+    },
+    {
+      "id": "mat_stone",
+      "displayName": "Stone",
+      "description": "Chunks of rock from the mines.",
+      "category": "Material",
+      "maxStackSize": 99,
+      "buyPrice": 10,
+      "sellPrice": 5
+    },
+    {
+      "id": "mat_ironore",
+      "displayName": "Iron Ore",
+      "description": "Raw iron from the deep mines. Needs smelting.",
+      "category": "Material",
+      "maxStackSize": 99,
+      "buyPrice": 25,
+      "sellPrice": 12
+    },
+    {
+      "id": "mat_copperore",
+      "displayName": "Copper Ore",
+      "description": "Greenish ore found near the surface.",
+      "category": "Material",
+      "maxStackSize": 99,
+      "buyPrice": 15,
+      "sellPrice": 7
+    },
+    {
+      "id": "mat_eldritchcrystal",
+      "displayName": "Eldritch Crystal",
+      "description": "Pulsates with an otherworldly energy. Handle with care.",
+      "category": "Material",
+      "maxStackSize": 99,
+      "buyPrice": 200,
+      "sellPrice": 100
+    },
+    {
+      "id": "mat_bone",
+      "displayName": "Bone Fragment",
+      "description": "Bleached bone from fallen creatures. Useful in alchemy.",
+      "category": "Material",
+      "maxStackSize": 99,
+      "buyPrice": 15,
+      "sellPrice": 8
+    },
+    {
+      "id": "mat_cloth",
+      "displayName": "Tattered Cloth",
+      "description": "Scavenged fabric. Can be woven into something useful.",
+      "category": "Material",
+      "maxStackSize": 99,
+      "buyPrice": 20,
+      "sellPrice": 10
+    },
+    {
+      "id": "mat_ironbar",
+      "displayName": "Iron Bar",
+      "description": "Smelted iron, ready for forging.",
+      "category": "Material",
+      "maxStackSize": 99,
+      "buyPrice": 60,
+      "sellPrice": 30
+    },
+    {
+      "id": "mat_copperbar",
+      "displayName": "Copper Bar",
+      "description": "Smelted copper, warm to the touch.",
+      "category": "Material",
+      "maxStackSize": 99,
+      "buyPrice": 40,
+      "sellPrice": 20
+    },
+    {
+      "id": "consume_healthpotion",
+      "displayName": "Health Potion",
+      "description": "A murky red liquid. Restores 50 health.",
+      "category": "Consumable",
+      "maxStackSize": 20,
+      "buyPrice": 75,
+      "sellPrice": 35
+    },
+    {
+      "id": "consume_staminapotion",
+      "displayName": "Stamina Elixir",
+      "description": "Bitter green brew. Restores 40 stamina.",
+      "category": "Consumable",
+      "maxStackSize": 20,
+      "buyPrice": 60,
+      "sellPrice": 30
+    },
+    {
+      "id": "consume_coffee",
+      "displayName": "Dark Coffee",
+      "description": "Strong brew. +1 Speed for 2 minutes.",
+      "category": "Consumable",
+      "maxStackSize": 20,
+      "buyPrice": 40,
+      "sellPrice": 20
+    },
+    {
+      "id": "consume_bread",
+      "displayName": "Spectral Bread",
+      "description": "Baked from bone wheat flour. Restores 20 stamina.",
+      "category": "Consumable",
+      "maxStackSize": 20,
+      "buyPrice": 30,
+      "sellPrice": 15
+    },
+    {
+      "id": "consume_fertilizer_speed",
+      "displayName": "Speed-Gro",
+      "description": "Accelerates crop growth by 10%.",
+      "category": "Consumable",
+      "maxStackSize": 99,
+      "buyPrice": 50,
+      "sellPrice": 25
+    },
+    {
+      "id": "consume_fertilizer_quality",
+      "displayName": "Quality Fertilizer",
+      "description": "Increases chance of higher quality harvest.",
+      "category": "Consumable",
+      "maxStackSize": 99,
+      "buyPrice": 75,
+      "sellPrice": 35
+    }
+  ]
+}

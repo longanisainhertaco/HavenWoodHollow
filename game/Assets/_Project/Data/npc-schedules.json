@@ -1,0 +1,212 @@
+{
+  "_comment": "NPC schedule and personality data for Havenwood Hollow. Defines daily routines, locations, and dialogue triggers.",
+  "npcs": [
+    {
+      "id": "npc_marta",
+      "displayName": "Old Marta",
+      "role": "General Store Owner",
+      "personality": "Warm but cautious. Knows everyone's secrets. Motherly toward the player.",
+      "defaultLocation": "town_general_store",
+      "schedule": {
+        "weekday": [
+          { "time": "06:00", "location": "npc_home_marta", "activity": "Waking up" },
+          { "time": "08:00", "location": "town_general_store", "activity": "Opens shop" },
+          { "time": "12:00", "location": "town_plaza", "activity": "Lunch break at bench" },
+          { "time": "13:00", "location": "town_general_store", "activity": "Afternoon shift" },
+          { "time": "18:00", "location": "town_tavern", "activity": "Evening socializing" },
+          { "time": "22:00", "location": "npc_home_marta", "activity": "Goes to sleep" }
+        ],
+        "weekend": [
+          { "time": "08:00", "location": "npc_home_marta", "activity": "Sleeping in" },
+          { "time": "10:00", "location": "town_church", "activity": "Morning prayer" },
+          { "time": "12:00", "location": "town_plaza", "activity": "Market browsing" },
+          { "time": "15:00", "location": "farm_entrance", "activity": "Visits player farm" },
+          { "time": "18:00", "location": "npc_home_marta", "activity": "Home for the evening" }
+        ],
+        "raidBehavior": "Hides in store cellar"
+      },
+      "dialogueTriggers": {
+        "firstMeeting": "dialogue_marta_intro",
+        "lowFriendship": "dialogue_marta_cold",
+        "highFriendship": "dialogue_marta_warm",
+        "seasonal_spring": "dialogue_marta_spring",
+        "seasonal_winter": "dialogue_marta_winter"
+      },
+      "giftPreferences": {
+        "loved": ["crop_corpselily", "consume_coffee"],
+        "liked": ["crop_witchcabbage", "consume_bread"],
+        "disliked": ["mat_bone", "crop_ghoulpepper"],
+        "hated": ["mat_eldritchcrystal"]
+      }
+    },
+    {
+      "id": "npc_gregor",
+      "displayName": "Gregor",
+      "role": "Blacksmith",
+      "personality": "Gruff, taciturn. Respects hard work. Has a hidden soft side for animals.",
+      "defaultLocation": "town_smithy",
+      "schedule": {
+        "weekday": [
+          { "time": "05:00", "location": "npc_home_gregor", "activity": "Early riser" },
+          { "time": "06:00", "location": "town_smithy", "activity": "Opens forge" },
+          { "time": "12:00", "location": "town_smithy", "activity": "Works through lunch" },
+          { "time": "19:00", "location": "town_tavern", "activity": "Evening drink" },
+          { "time": "21:00", "location": "npc_home_gregor", "activity": "Goes home" }
+        ],
+        "weekend": [
+          { "time": "07:00", "location": "forest_edge", "activity": "Foraging for ore" },
+          { "time": "12:00", "location": "town_smithy", "activity": "Personal projects" },
+          { "time": "18:00", "location": "town_tavern", "activity": "Drinks with friends" }
+        ],
+        "raidBehavior": "Defends town gate with hammer"
+      },
+      "dialogueTriggers": {
+        "firstMeeting": "dialogue_gregor_intro",
+        "lowFriendship": "dialogue_gregor_grunt",
+        "highFriendship": "dialogue_gregor_respect"
+      },
+      "giftPreferences": {
+        "loved": ["mat_ironbar", "mat_eldritchcrystal"],
+        "liked": ["mat_copperbar", "mat_stone"],
+        "disliked": ["crop_corpselily", "consume_bread"],
+        "hated": ["crop_nightshade"]
+      }
+    },
+    {
+      "id": "npc_elara",
+      "displayName": "Elara",
+      "role": "Herbalist / Witch",
+      "personality": "Mysterious, knowledgeable. Speaks in riddles. Fascinated by the player's arrival.",
+      "defaultLocation": "town_herbalist_shop",
+      "schedule": {
+        "weekday": [
+          { "time": "07:00", "location": "forest_clearing", "activity": "Gathering herbs" },
+          { "time": "10:00", "location": "town_herbalist_shop", "activity": "Opens shop" },
+          { "time": "14:00", "location": "town_herbalist_shop", "activity": "Brewing potions" },
+          { "time": "18:00", "location": "graveyard_entrance", "activity": "Evening research" },
+          { "time": "22:00", "location": "npc_home_elara", "activity": "Late night study" }
+        ],
+        "weekend": [
+          { "time": "09:00", "location": "forest_deep", "activity": "Deep forest expedition" },
+          { "time": "15:00", "location": "town_herbalist_shop", "activity": "Special brewing" },
+          { "time": "20:00", "location": "npc_home_elara", "activity": "Reading ancient texts" }
+        ],
+        "raidBehavior": "Casts protective wards, heals defenders"
+      },
+      "dialogueTriggers": {
+        "firstMeeting": "dialogue_elara_intro",
+        "lowFriendship": "dialogue_elara_cryptic",
+        "highFriendship": "dialogue_elara_trust",
+        "questTrigger": "quest_elara_alchemy_lessons"
+      },
+      "giftPreferences": {
+        "loved": ["crop_corpselily", "mat_eldritchcrystal"],
+        "liked": ["crop_bloodroot", "crop_nightshade"],
+        "disliked": ["mat_ironbar", "tool_sword"],
+        "hated": ["mat_stone"]
+      }
+    },
+    {
+      "id": "npc_father_ashton",
+      "displayName": "Father Ashton",
+      "role": "Village Priest / Occultist",
+      "personality": "Conflicted. Devout yet drawn to forbidden knowledge. Protective of the village.",
+      "defaultLocation": "town_church",
+      "schedule": {
+        "weekday": [
+          { "time": "05:00", "location": "town_church", "activity": "Morning prayers" },
+          { "time": "09:00", "location": "town_plaza", "activity": "Greeting villagers" },
+          { "time": "12:00", "location": "town_church", "activity": "Midday sermon" },
+          { "time": "15:00", "location": "graveyard", "activity": "Tending graves" },
+          { "time": "19:00", "location": "town_church", "activity": "Evening prayers" },
+          { "time": "21:00", "location": "npc_home_ashton", "activity": "Secret occult study" }
+        ],
+        "weekend": [
+          { "time": "06:00", "location": "town_church", "activity": "Extended service" },
+          { "time": "11:00", "location": "town_plaza", "activity": "Community gathering" },
+          { "time": "14:00", "location": "graveyard", "activity": "Meditation among graves" }
+        ],
+        "raidBehavior": "Leads villagers to church sanctuary, blesses weapons"
+      },
+      "dialogueTriggers": {
+        "firstMeeting": "dialogue_ashton_intro",
+        "lowFriendship": "dialogue_ashton_sermon",
+        "highFriendship": "dialogue_ashton_confession",
+        "questTrigger": "quest_ashton_holy_water"
+      },
+      "giftPreferences": {
+        "loved": ["consume_coffee", "crop_witchcabbage"],
+        "liked": ["consume_bread", "crop_eternalturnip"],
+        "disliked": ["mat_bone", "crop_corpselily"],
+        "hated": ["mat_eldritchcrystal"]
+      }
+    },
+    {
+      "id": "npc_silas",
+      "displayName": "Silas",
+      "role": "Gravedigger",
+      "personality": "Morbidly cheerful. Talks to the dead. Surprisingly insightful about the Hollow's history.",
+      "defaultLocation": "graveyard",
+      "schedule": {
+        "weekday": [
+          { "time": "06:00", "location": "graveyard", "activity": "Digging and maintenance" },
+          { "time": "12:00", "location": "town_tavern", "activity": "Lunch alone" },
+          { "time": "14:00", "location": "graveyard", "activity": "Afternoon digging" },
+          { "time": "20:00", "location": "graveyard_shed", "activity": "Sleeps in shed" }
+        ],
+        "weekend": [
+          { "time": "08:00", "location": "graveyard", "activity": "Talking to headstones" },
+          { "time": "12:00", "location": "town_tavern", "activity": "Telling ghost stories" },
+          { "time": "16:00", "location": "forest_edge", "activity": "Collecting wildflowers for graves" }
+        ],
+        "raidBehavior": "Expert at spotting undead weaknesses, scouts enemy positions"
+      },
+      "dialogueTriggers": {
+        "firstMeeting": "dialogue_silas_intro",
+        "lowFriendship": "dialogue_silas_mumble",
+        "highFriendship": "dialogue_silas_lore",
+        "questTrigger": "quest_silas_lost_grave"
+      },
+      "giftPreferences": {
+        "loved": ["crop_corpselily", "mat_bone"],
+        "liked": ["crop_gravepumpkin", "crop_witchcabbage"],
+        "disliked": ["consume_coffee", "mat_ironbar"],
+        "hated": ["consume_healthpotion"]
+      }
+    },
+    {
+      "id": "npc_rosalind",
+      "displayName": "Rosalind",
+      "role": "Tavern Keeper",
+      "personality": "Boisterous, warm. The social hub of the village. Knows all the gossip.",
+      "defaultLocation": "town_tavern",
+      "schedule": {
+        "weekday": [
+          { "time": "08:00", "location": "town_tavern", "activity": "Morning cleaning" },
+          { "time": "11:00", "location": "town_tavern", "activity": "Opens for lunch" },
+          { "time": "15:00", "location": "town_plaza", "activity": "Shopping for ingredients" },
+          { "time": "17:00", "location": "town_tavern", "activity": "Evening service" },
+          { "time": "23:00", "location": "npc_home_rosalind", "activity": "Goes home late" }
+        ],
+        "weekend": [
+          { "time": "10:00", "location": "town_tavern", "activity": "Special brunch" },
+          { "time": "14:00", "location": "farm_entrance", "activity": "Visiting the farm" },
+          { "time": "17:00", "location": "town_tavern", "activity": "Weekend party night" }
+        ],
+        "raidBehavior": "Barricades tavern, serves as emergency shelter"
+      },
+      "dialogueTriggers": {
+        "firstMeeting": "dialogue_rosalind_intro",
+        "lowFriendship": "dialogue_rosalind_busy",
+        "highFriendship": "dialogue_rosalind_gossip",
+        "questTrigger": "quest_rosalind_missing_recipe"
+      },
+      "giftPreferences": {
+        "loved": ["consume_coffee", "crop_ghoulpepper"],
+        "liked": ["consume_bread", "crop_shadowmelon"],
+        "disliked": ["mat_stone", "mat_bone"],
+        "hated": ["crop_corpselily"]
+      }
+    }
+  ]
+}
