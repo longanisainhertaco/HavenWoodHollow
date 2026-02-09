@@ -141,7 +141,11 @@ namespace HavenwoodHollow.Crafting
                     var refund = recipe.Ingredients[j];
                     if (refund.item != null)
                     {
-                        inventory.AddItem(refund.item, refund.quantity);
+                        bool refunded = inventory.AddItem(refund.item, refund.quantity);
+                        if (!refunded)
+                        {
+                            Debug.LogError($"[CraftingManager] Failed to refund {refund.quantity}x {refund.item.DisplayName}. Items may be lost.");
+                        }
                     }
                 }
                 return false;

@@ -196,11 +196,8 @@ namespace HavenwoodHollow.Core
                 var stats = player.GetComponent<PlayerStats>();
                 if (stats != null)
                 {
-                    stats.RestoreAllStats();
-                    if (data.playerHealth < stats.MaxHealth)
-                    {
-                        stats.TakeDamage(stats.MaxHealth - data.playerHealth);
-                    }
+                    stats.SetHealth(data.playerHealth);
+                    stats.SetStamina(data.playerStamina);
                 }
             }
 
