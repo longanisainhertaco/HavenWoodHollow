@@ -105,7 +105,7 @@ namespace HavenwoodHollow.Crafting
         {
             if (recipe == null) return false;
 
-            var inventory = Inventory.InventoryManager.Instance;
+            var inventory = InventoryManager.Instance;
             if (inventory == null) return false;
 
             if (!unlockedRecipeIds.Contains(recipe.ID))

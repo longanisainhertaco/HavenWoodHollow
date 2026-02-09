@@ -77,7 +77,7 @@ namespace HavenwoodHollow.Crafting
         /// <summary>
         /// Checks whether the player has all required ingredients in their inventory.
         /// </summary>
-        public bool CanCraft(Inventory.InventoryManager inventory)
+        public bool CanCraft(InventoryManager inventory)
         {
             if (inventory == null || ingredients == null)
                 return false;

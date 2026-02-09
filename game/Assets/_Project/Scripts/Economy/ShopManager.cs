@@ -144,7 +144,7 @@ namespace HavenwoodHollow.Economy
             }
 
             // Check inventory space
-            var inventory = Inventory.InventoryManager.Instance;
+            var inventory = InventoryManager.Instance;
             if (inventory == null) return false;
 
             if (!inventory.AddItem(shopItem.item, quantity))
@@ -180,7 +180,7 @@ namespace HavenwoodHollow.Economy
             if (currentShop == null) return false;
             if (string.IsNullOrEmpty(itemId) || quantity <= 0) return false;
 
-            var inventory = Inventory.InventoryManager.Instance;
+            var inventory = InventoryManager.Instance;
             if (inventory == null) return false;
 
             if (!inventory.HasItem(itemId, quantity))
@@ -262,7 +262,7 @@ namespace HavenwoodHollow.Economy
         /// </summary>
         private ItemData FindItemInInventory(string itemId)
         {
-            var inventory = Inventory.InventoryManager.Instance;
+            var inventory = InventoryManager.Instance;
             if (inventory == null) return null;
 
             for (int i = 0; i < inventory.InventorySize; i++)

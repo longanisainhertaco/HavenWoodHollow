@@ -217,7 +217,7 @@ namespace HavenwoodHollow.Quests
             QuestData quest = FindQuestById(questId);
             if (quest == null || quest.Rewards == null) return false;
 
-            var inventory = Inventory.InventoryManager.Instance;
+            var inventory = InventoryManager.Instance;
 
             for (int i = 0; i < quest.Rewards.Length; i++)
             {
@@ -230,7 +230,7 @@ namespace HavenwoodHollow.Quests
 
                 if (reward.recipeUnlock != null)
                 {
-                    var crafting = Crafting.CraftingManager.Instance;
+                    var crafting = CraftingManager.Instance;
                     if (crafting != null)
                     {
                         crafting.UnlockRecipe(reward.recipeUnlock.ID);
