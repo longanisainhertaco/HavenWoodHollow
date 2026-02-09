@@ -17,8 +17,18 @@ success() { printf "${GREEN}[OK]${NC}    %s\n" "$*"; }
 warn()    { printf "${YELLOW}[WARN]${NC}  %s\n" "$*"; }
 fail()    { printf "${RED}[FAIL]${NC}  %s\n" "$*"; }
 
-# ── Parse arguments ─────────────────────────────────────────────────────────
-SERVER_PORT=8090
+# ── Resolve paths & load .env ────────────────────────────────────────────────
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+SERVER_DIR="$REPO_ROOT/unity-mcp-plugin/server"
+
+if [[ -f "$REPO_ROOT/.env" ]]; then
+  # shellcheck source=/dev/null
+  set -a; source "$REPO_ROOT/.env"; set +a
+fi
+
+# ── Parse arguments (.env provides defaults; CLI flags override) ─────────────
+SERVER_PORT="${UNITY_MCP_PORT:-8090}"
 DEV_MODE=false
 
 while [[ $# -gt 0 ]]; do
@@ -39,11 +49,6 @@ while [[ $# -gt 0 ]]; do
   esac
   shift
 done
-
-# ── Resolve paths ────────────────────────────────────────────────────────────
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
-SERVER_DIR="$REPO_ROOT/unity-mcp-plugin/server"
 
 echo ""
 echo "============================================="

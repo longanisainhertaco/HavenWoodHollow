@@ -16,9 +16,18 @@ success() { printf "${GREEN}[OK]${NC}    %s\n" "$*"; }
 warn()    { printf "${YELLOW}[WARN]${NC}  %s\n" "$*"; }
 fail()    { printf "${RED}[FAIL]${NC}  %s\n" "$*"; }
 
-# ── Parse arguments ─────────────────────────────────────────────────────────
+# ── Resolve paths & load .env ────────────────────────────────────────────────
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+
+if [[ -f "$REPO_ROOT/.env" ]]; then
+  # shellcheck source=/dev/null
+  set -a; source "$REPO_ROOT/.env"; set +a
+fi
+
+# ── Parse arguments (.env UNITY_PROJECT is the default; CLI arg overrides) ──
 USE_COPY=false
-UNITY_PROJECT=""
+UNITY_PROJECT="${UNITY_PROJECT:-}"
 
 for arg in "$@"; do
   case "$arg" in
@@ -46,9 +55,7 @@ if [[ -z "$UNITY_PROJECT" ]]; then
   exit 1
 fi
 
-# ── Resolve paths ────────────────────────────────────────────────────────────
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+# ── Derived paths ────────────────────────────────────────────────────────────
 PACKAGE_SRC="$REPO_ROOT/unity-mcp-plugin/unity-package"
 PACKAGES_DIR="$UNITY_PROJECT/Packages"
 DEST="$PACKAGES_DIR/com.havenwoodhollow.mcp-bridge"

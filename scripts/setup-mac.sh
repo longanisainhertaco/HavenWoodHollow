@@ -52,6 +52,12 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 SERVER_DIR="$REPO_ROOT/unity-mcp-plugin/server"
 
+# ── Load .env if present (CLI flags above take precedence) ──────────────────
+if [[ -f "$REPO_ROOT/.env" ]]; then
+  # shellcheck source=/dev/null
+  set -a; source "$REPO_ROOT/.env"; set +a
+fi
+
 echo ""
 echo "============================================="
 echo "  HavenWoodHollow — macOS Setup"

@@ -22,6 +22,18 @@ fail()    { printf "${RED}[FAIL]${NC}  %s\n" "$*"; }
 REMOVE_NODE_MODULES=false
 UNITY_PROJECT=""
 
+# Resolve paths early so .env can be loaded before arg parsing
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+
+if [[ -f "$REPO_ROOT/.env" ]]; then
+  # shellcheck source=/dev/null
+  set -a; source "$REPO_ROOT/.env"; set +a
+fi
+
+# .env UNITY_PROJECT is the default; CLI --unity-project overrides
+UNITY_PROJECT="${UNITY_PROJECT:-}"
+
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --remove-node-modules) REMOVE_NODE_MODULES=true ;;
@@ -41,8 +53,6 @@ while [[ $# -gt 0 ]]; do
   shift
 done
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 SERVER_DIR="$REPO_ROOT/unity-mcp-plugin/server"
 CLAUDE_CONFIG="$HOME/Library/Application Support/Claude/claude_desktop_config.json"
 

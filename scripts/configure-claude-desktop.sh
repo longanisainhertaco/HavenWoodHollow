@@ -16,8 +16,17 @@ success() { printf "${GREEN}[OK]${NC}    %s\n" "$*"; }
 warn()    { printf "${YELLOW}[WARN]${NC}  %s\n" "$*"; }
 fail()    { printf "${RED}[FAIL]${NC}  %s\n" "$*"; }
 
-# ── Parse arguments ─────────────────────────────────────────────────────────
-SERVER_PORT=8090
+# ── Resolve paths & load .env ────────────────────────────────────────────────
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+
+if [[ -f "$REPO_ROOT/.env" ]]; then
+  # shellcheck source=/dev/null
+  set -a; source "$REPO_ROOT/.env"; set +a
+fi
+
+# ── Parse arguments (.env provides defaults; CLI flags override) ─────────────
+SERVER_PORT="${UNITY_MCP_PORT:-8090}"
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --server-port)  shift; SERVER_PORT="${1:-8090}" ;;
@@ -31,9 +40,7 @@ while [[ $# -gt 0 ]]; do
   shift
 done
 
-# ── Resolve paths ────────────────────────────────────────────────────────────
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+# ── Derived paths ────────────────────────────────────────────────────────────
 SERVER_ENTRY="$REPO_ROOT/unity-mcp-plugin/server/dist/index.js"
 CLAUDE_CONFIG_DIR="$HOME/Library/Application Support/Claude"
 CLAUDE_CONFIG="$CLAUDE_CONFIG_DIR/claude_desktop_config.json"
@@ -66,7 +73,7 @@ mkdir -p "$CLAUDE_CONFIG_DIR"
 # We need to merge into any existing config. If the file doesn't exist or is
 # empty, create a fresh one.  If it exists, we inject our server entry.
 
-NODE_PATH="$(command -v node)"
+NODE_PATH="${NODE_PATH:-$(command -v node)}"
 
 NEW_SERVER_BLOCK=$(cat <<EOF
 {

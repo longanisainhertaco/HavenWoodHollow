@@ -21,7 +21,17 @@ success() { printf "${GREEN}[  ✓ ]${NC}  %s\n" "$*"; }
 warn()    { printf "${YELLOW}[WARN]${NC}  %s\n" "$*"; }
 fail()    { printf "${RED}[  ✗ ]${NC}  %s\n" "$*"; }
 
-UNITY_PROJECT=""
+# ── Resolve paths & load .env ────────────────────────────────────────────────
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+
+if [[ -f "$REPO_ROOT/.env" ]]; then
+  # shellcheck source=/dev/null
+  set -a; source "$REPO_ROOT/.env"; set +a
+fi
+
+# ── Parse arguments (.env provides defaults; CLI flags override) ─────────────
+UNITY_PROJECT="${UNITY_PROJECT:-}"
 ISSUES=0
 
 while [[ $# -gt 0 ]]; do
@@ -36,8 +46,6 @@ while [[ $# -gt 0 ]]; do
   shift
 done
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 SERVER_DIR="$REPO_ROOT/unity-mcp-plugin/server"
 CLAUDE_CONFIG="$HOME/Library/Application Support/Claude/claude_desktop_config.json"
 
@@ -118,7 +126,7 @@ else
 fi
 
 # ── 6. Port availability ────────────────────────────────────────────────────
-PORT=8090
+PORT="${UNITY_MCP_PORT:-8090}"
 if command -v lsof &>/dev/null; then
   if lsof -i :"$PORT" -sTCP:LISTEN &>/dev/null; then
     warn "Port $PORT is already in use (MCP server may already be running)"

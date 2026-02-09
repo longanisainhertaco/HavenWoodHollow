@@ -8,6 +8,10 @@ One-command scripts to install, configure, and manage the HavenWoodHollow Unity 
 # Make scripts executable (one-time)
 chmod +x scripts/*.sh
 
+# Optional: create a .env file to set defaults
+cp .env.example .env
+# Edit .env with your project path and preferred port
+
 # Full setup — installs dependencies, builds the server
 ./scripts/setup-mac.sh
 
@@ -137,6 +141,41 @@ Removes MCP configuration and optionally cleans up build artifacts.
 |------|-------------|
 | `--remove-node-modules` | Also delete `node_modules/` and `dist/` |
 | `--unity-project /path` | Remove the MCP Bridge package from a Unity project |
+
+---
+
+## Environment File (`.env`)
+
+All scripts automatically load a `.env` file from the repository root if it exists. This lets you set defaults once instead of passing flags on every invocation.
+
+```bash
+cp .env.example .env   # create from template
+```
+
+### Supported Variables
+
+| Variable | Default | Used by |
+|----------|---------|---------|
+| `UNITY_MCP_PORT` | `8090` | `configure-claude-desktop.sh`, `start-server.sh`, `verify-installation.sh` |
+| `UNITY_PROJECT` | *(none)* | `install-unity-package.sh`, `verify-installation.sh`, `uninstall-mac.sh` |
+| `NODE_PATH` | *(auto-detected)* | `configure-claude-desktop.sh` |
+
+**Precedence:** CLI flags > `.env` values > built-in defaults.
+
+Example `.env`:
+```bash
+UNITY_MCP_PORT=9090
+UNITY_PROJECT=/Users/me/Projects/MyGame
+```
+
+With this file, you can simply run:
+```bash
+./scripts/install-unity-package.sh   # uses UNITY_PROJECT from .env
+./scripts/start-server.sh            # uses port 9090 from .env
+./scripts/start-server.sh --port 7777  # CLI flag overrides .env
+```
+
+> **Note:** `.env` is listed in `.gitignore` and will not be committed.
 
 ---
 
