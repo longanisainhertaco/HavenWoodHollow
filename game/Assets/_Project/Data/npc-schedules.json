@@ -207,6 +207,842 @@
         "disliked": ["mat_stone", "mat_bone"],
         "hated": ["crop_corpselily"]
       }
+    },
+    {
+      "id": "npc_mortimer",
+      "displayName": "Mortimer",
+      "role": "Town Mayor",
+      "personality": "Pompous and long-winded, but genuinely cares about Havenwood Hollow's survival. Obsessed with civic order even as darkness encroaches.",
+      "defaultLocation": "town_hall",
+      "schedule": {
+        "weekday": [
+          { "time": "07:00", "location": "npc_home_mortimer", "activity": "Morning grooming ritual" },
+          { "time": "08:00", "location": "town_hall", "activity": "Opens office, reviews ledgers" },
+          { "time": "10:00", "location": "town_plaza", "activity": "Public address to villagers" },
+          { "time": "12:00", "location": "town_tavern", "activity": "Lunch with constituents" },
+          { "time": "14:00", "location": "town_hall", "activity": "Afternoon meetings" },
+          { "time": "19:00", "location": "npc_home_mortimer", "activity": "Retires for the evening" }
+        ],
+        "weekend": [
+          { "time": "09:00", "location": "npc_home_mortimer", "activity": "Leisurely breakfast" },
+          { "time": "11:00", "location": "town_plaza", "activity": "Inspects town upkeep" },
+          { "time": "14:00", "location": "town_tavern", "activity": "Social drinks" },
+          { "time": "18:00", "location": "npc_home_mortimer", "activity": "Private reading" }
+        ],
+        "raidBehavior": "Organizes civilian evacuation to town hall, issues orders from safety"
+      },
+      "dialogueTriggers": {
+        "firstMeeting": "dialogue_mortimer_intro",
+        "lowFriendship": "dialogue_mortimer_formal",
+        "highFriendship": "dialogue_mortimer_candid"
+      },
+      "giftPreferences": {
+        "loved": ["consume_coffee", "crop_eternalturnip"],
+        "liked": ["consume_bread", "crop_witchcabbage"],
+        "disliked": ["mat_bone", "crop_bloodroot"],
+        "hated": ["crop_corpselily"]
+      }
+    },
+    {
+      "id": "npc_hilda",
+      "displayName": "Hilda",
+      "role": "Baker",
+      "personality": "Cheerful and relentlessly optimistic despite the gloom. Rises before dawn and hums while she works.",
+      "defaultLocation": "town_bakery",
+      "schedule": {
+        "weekday": [
+          { "time": "04:00", "location": "town_bakery", "activity": "Starts the ovens, kneads dough" },
+          { "time": "06:00", "location": "town_bakery", "activity": "Opens shop, fresh bread ready" },
+          { "time": "12:00", "location": "town_plaza", "activity": "Delivers bread to market stalls" },
+          { "time": "14:00", "location": "town_bakery", "activity": "Afternoon baking" },
+          { "time": "17:00", "location": "town_tavern", "activity": "Delivers pastries to tavern" },
+          { "time": "19:00", "location": "npc_home_hilda", "activity": "Early to bed" }
+        ],
+        "weekend": [
+          { "time": "05:00", "location": "town_bakery", "activity": "Special weekend pastries" },
+          { "time": "10:00", "location": "town_church", "activity": "Morning service" },
+          { "time": "13:00", "location": "town_plaza", "activity": "Picnic with neighbors" },
+          { "time": "18:00", "location": "npc_home_hilda", "activity": "Resting at home" }
+        ],
+        "raidBehavior": "Shelters in bakery cellar, rations bread for survivors"
+      },
+      "dialogueTriggers": {
+        "firstMeeting": "dialogue_hilda_intro",
+        "lowFriendship": "dialogue_hilda_polite",
+        "highFriendship": "dialogue_hilda_sweet"
+      },
+      "giftPreferences": {
+        "loved": ["crop_bonewheat", "crop_shadowmelon"],
+        "liked": ["consume_coffee", "crop_moonpotato"],
+        "disliked": ["mat_ironore", "mat_bone"],
+        "hated": ["crop_nightshade"]
+      }
+    },
+    {
+      "id": "npc_viktor",
+      "displayName": "Viktor",
+      "role": "Doctor / Surgeon",
+      "personality": "Methodical and clinical, with an unsettling fascination with anatomy. His cures work, but his bedside manner is ice-cold.",
+      "defaultLocation": "town_clinic",
+      "schedule": {
+        "weekday": [
+          { "time": "06:00", "location": "npc_home_viktor", "activity": "Morning preparation" },
+          { "time": "07:00", "location": "town_clinic", "activity": "Opens clinic, sees patients" },
+          { "time": "12:00", "location": "town_clinic", "activity": "Surgical procedures" },
+          { "time": "15:00", "location": "town_herbalist_shop", "activity": "Consults with Elara on remedies" },
+          { "time": "18:00", "location": "town_clinic", "activity": "Evening research and notes" },
+          { "time": "22:00", "location": "npc_home_viktor", "activity": "Late reading, retires" }
+        ],
+        "weekend": [
+          { "time": "08:00", "location": "town_clinic", "activity": "Emergency hours only" },
+          { "time": "12:00", "location": "graveyard", "activity": "Studies old burial records" },
+          { "time": "16:00", "location": "npc_home_viktor", "activity": "Private anatomical study" }
+        ],
+        "raidBehavior": "Sets up triage station at clinic, treats wounded defenders"
+      },
+      "dialogueTriggers": {
+        "firstMeeting": "dialogue_viktor_intro",
+        "lowFriendship": "dialogue_viktor_clinical",
+        "highFriendship": "dialogue_viktor_confide",
+        "questTrigger": "quest_viktor_plague_cure"
+      },
+      "giftPreferences": {
+        "loved": ["consume_healthpotion", "crop_bloodroot"],
+        "liked": ["consume_staminapotion", "crop_nightshade"],
+        "disliked": ["consume_bread", "mat_stone"],
+        "hated": ["crop_ghoulpepper"]
+      }
+    },
+    {
+      "id": "npc_lucinda",
+      "displayName": "Lucinda",
+      "role": "Librarian",
+      "personality": "Painfully shy and soft-spoken, but harbors dark secrets about the Hollow's true history hidden within her books.",
+      "defaultLocation": "town_library",
+      "schedule": {
+        "weekday": [
+          { "time": "07:00", "location": "npc_home_lucinda", "activity": "Quiet breakfast with a book" },
+          { "time": "09:00", "location": "town_library", "activity": "Opens library, catalogs books" },
+          { "time": "12:00", "location": "town_library", "activity": "Reads through lunch" },
+          { "time": "15:00", "location": "town_library", "activity": "Afternoon organizing" },
+          { "time": "18:00", "location": "town_plaza", "activity": "Brief evening walk" },
+          { "time": "20:00", "location": "npc_home_lucinda", "activity": "Private research by candlelight" }
+        ],
+        "weekend": [
+          { "time": "08:00", "location": "npc_home_lucinda", "activity": "Late morning reading" },
+          { "time": "11:00", "location": "forest_edge", "activity": "Sketches plants for her journal" },
+          { "time": "14:00", "location": "town_library", "activity": "Deciphering old manuscripts" },
+          { "time": "19:00", "location": "npc_home_lucinda", "activity": "Home for the evening" }
+        ],
+        "raidBehavior": "Hides in library vault, protects the ancient texts at all costs"
+      },
+      "dialogueTriggers": {
+        "firstMeeting": "dialogue_lucinda_intro",
+        "lowFriendship": "dialogue_lucinda_whisper",
+        "highFriendship": "dialogue_lucinda_revelation",
+        "questTrigger": "quest_lucinda_forbidden_tome"
+      },
+      "giftPreferences": {
+        "loved": ["crop_nightshade", "mat_eldritchcrystal"],
+        "liked": ["consume_coffee", "crop_moonpotato"],
+        "disliked": ["tool_sword", "mat_ironbar"],
+        "hated": ["crop_ghoulpepper"]
+      }
+    },
+    {
+      "id": "npc_barnaby",
+      "displayName": "Barnaby",
+      "role": "Fisherman",
+      "personality": "Grizzled and weathered old sailor who settled inland. Tells tall tales of sea monsters that might not be so tall after all.",
+      "defaultLocation": "town_docks",
+      "schedule": {
+        "weekday": [
+          { "time": "04:00", "location": "town_docks", "activity": "Pre-dawn fishing" },
+          { "time": "08:00", "location": "town_docks", "activity": "Cleans and sells catch" },
+          { "time": "12:00", "location": "town_tavern", "activity": "Lunch and sea stories" },
+          { "time": "14:00", "location": "town_docks", "activity": "Mends nets and gear" },
+          { "time": "18:00", "location": "town_tavern", "activity": "Evening drinks" },
+          { "time": "21:00", "location": "npc_home_barnaby", "activity": "Retires for the night" }
+        ],
+        "weekend": [
+          { "time": "05:00", "location": "town_docks", "activity": "Early morning deep fishing" },
+          { "time": "11:00", "location": "town_plaza", "activity": "Sells fresh catch at market" },
+          { "time": "15:00", "location": "town_tavern", "activity": "Afternoon storytelling" },
+          { "time": "20:00", "location": "npc_home_barnaby", "activity": "Whittles by the fire" }
+        ],
+        "raidBehavior": "Guards the docks, uses harpoon against attackers"
+      },
+      "dialogueTriggers": {
+        "firstMeeting": "dialogue_barnaby_intro",
+        "lowFriendship": "dialogue_barnaby_gruff",
+        "highFriendship": "dialogue_barnaby_yarns"
+      },
+      "giftPreferences": {
+        "loved": ["tool_fishingrod", "consume_coffee"],
+        "liked": ["consume_bread", "mat_wood"],
+        "disliked": ["mat_eldritchcrystal", "crop_corpselily"],
+        "hated": ["crop_nightshade"]
+      }
+    },
+    {
+      "id": "npc_ophelia",
+      "displayName": "Ophelia",
+      "role": "Seamstress / Tailor",
+      "personality": "Elegant and sharp-tongued, she weaves gossip as deftly as she weaves fabric. Nothing escapes her notice.",
+      "defaultLocation": "town_tailor",
+      "schedule": {
+        "weekday": [
+          { "time": "07:00", "location": "npc_home_ophelia", "activity": "Morning tea and fashion sketches" },
+          { "time": "09:00", "location": "town_tailor", "activity": "Opens shop" },
+          { "time": "12:00", "location": "town_plaza", "activity": "People-watching over lunch" },
+          { "time": "13:00", "location": "town_tailor", "activity": "Afternoon tailoring" },
+          { "time": "17:00", "location": "town_tavern", "activity": "Evening gossip rounds" },
+          { "time": "21:00", "location": "npc_home_ophelia", "activity": "Late night sewing" }
+        ],
+        "weekend": [
+          { "time": "09:00", "location": "town_church", "activity": "Sunday best inspection" },
+          { "time": "12:00", "location": "town_plaza", "activity": "Social hour" },
+          { "time": "15:00", "location": "town_tailor", "activity": "Personal sewing projects" },
+          { "time": "19:00", "location": "npc_home_ophelia", "activity": "Quiet evening at home" }
+        ],
+        "raidBehavior": "Hides in tailor shop, sews bandages for the wounded"
+      },
+      "dialogueTriggers": {
+        "firstMeeting": "dialogue_ophelia_intro",
+        "lowFriendship": "dialogue_ophelia_snide",
+        "highFriendship": "dialogue_ophelia_confide"
+      },
+      "giftPreferences": {
+        "loved": ["mat_cloth", "crop_corpselily"],
+        "liked": ["consume_coffee", "crop_shadowmelon"],
+        "disliked": ["mat_ironore", "mat_stone"],
+        "hated": ["mat_bone"]
+      }
+    },
+    {
+      "id": "npc_thorne",
+      "displayName": "Thorne",
+      "role": "Town Guard Captain",
+      "personality": "Stern and disciplined military veteran. Carries old battle scars and older regrets. Fiercely protective of the town.",
+      "defaultLocation": "town_guardpost",
+      "schedule": {
+        "weekday": [
+          { "time": "05:00", "location": "town_guardpost", "activity": "Dawn patrol briefing" },
+          { "time": "07:00", "location": "town_plaza", "activity": "Morning patrol route" },
+          { "time": "10:00", "location": "town_guardpost", "activity": "Training drills" },
+          { "time": "13:00", "location": "town_tavern", "activity": "Quick lunch" },
+          { "time": "14:00", "location": "forest_edge", "activity": "Perimeter inspection" },
+          { "time": "20:00", "location": "town_guardpost", "activity": "Night watch begins" }
+        ],
+        "weekend": [
+          { "time": "06:00", "location": "town_guardpost", "activity": "Reduced patrol" },
+          { "time": "12:00", "location": "town_tavern", "activity": "Lunch with off-duty guards" },
+          { "time": "16:00", "location": "town_smithy", "activity": "Weapon maintenance with Gregor" }
+        ],
+        "raidBehavior": "Commands town defense, leads counterattack from guardpost"
+      },
+      "dialogueTriggers": {
+        "firstMeeting": "dialogue_thorne_intro",
+        "lowFriendship": "dialogue_thorne_curt",
+        "highFriendship": "dialogue_thorne_veteran",
+        "questTrigger": "quest_thorne_defend_walls"
+      },
+      "giftPreferences": {
+        "loved": ["tool_sword", "mat_ironbar"],
+        "liked": ["consume_staminapotion", "mat_copperbar"],
+        "disliked": ["crop_corpselily", "crop_nightshade"],
+        "hated": ["mat_eldritchcrystal"]
+      }
+    },
+    {
+      "id": "npc_ivy",
+      "displayName": "Ivy",
+      "role": "Florist",
+      "personality": "A nature-loving dreamer who sees beauty even in the Hollow's twisted flora. She talks to her plants and swears they talk back.",
+      "defaultLocation": "town_flower_shop",
+      "schedule": {
+        "weekday": [
+          { "time": "06:00", "location": "town_flower_shop", "activity": "Watering plants at dawn" },
+          { "time": "08:00", "location": "town_flower_shop", "activity": "Opens shop" },
+          { "time": "11:00", "location": "forest_clearing", "activity": "Foraging for wildflowers" },
+          { "time": "14:00", "location": "town_flower_shop", "activity": "Arranging bouquets" },
+          { "time": "18:00", "location": "town_plaza", "activity": "Evening stroll" },
+          { "time": "20:00", "location": "npc_home_ivy", "activity": "Pressing flowers in journal" }
+        ],
+        "weekend": [
+          { "time": "07:00", "location": "forest_clearing", "activity": "Morning nature walk" },
+          { "time": "11:00", "location": "graveyard", "activity": "Placing flowers on old graves" },
+          { "time": "15:00", "location": "farm_entrance", "activity": "Visits player farm gardens" },
+          { "time": "19:00", "location": "npc_home_ivy", "activity": "Dries herbs at home" }
+        ],
+        "raidBehavior": "Retreats to flower shop, uses herbal smoke to repel lesser creatures"
+      },
+      "dialogueTriggers": {
+        "firstMeeting": "dialogue_ivy_intro",
+        "lowFriendship": "dialogue_ivy_distant",
+        "highFriendship": "dialogue_ivy_bloom"
+      },
+      "giftPreferences": {
+        "loved": ["crop_corpselily", "crop_bloodroot"],
+        "liked": ["crop_nightshade", "crop_moonpotato"],
+        "disliked": ["mat_ironore", "tool_sword"],
+        "hated": ["mat_bone"]
+      }
+    },
+    {
+      "id": "npc_cedric",
+      "displayName": "Cedric",
+      "role": "Carpenter",
+      "personality": "A quiet, steady craftsman who lets his woodwork speak for him. Rarely says more than a few words, but every one counts.",
+      "defaultLocation": "town_workshop",
+      "schedule": {
+        "weekday": [
+          { "time": "06:00", "location": "town_workshop", "activity": "Opens workshop, selects lumber" },
+          { "time": "08:00", "location": "town_workshop", "activity": "Building furniture" },
+          { "time": "12:00", "location": "town_tavern", "activity": "Quiet lunch" },
+          { "time": "13:00", "location": "town_workshop", "activity": "Afternoon woodwork" },
+          { "time": "17:00", "location": "forest_edge", "activity": "Sourcing timber" },
+          { "time": "20:00", "location": "npc_home_cedric", "activity": "Whittles by candlelight" }
+        ],
+        "weekend": [
+          { "time": "07:00", "location": "forest_edge", "activity": "Harvesting wood" },
+          { "time": "12:00", "location": "town_workshop", "activity": "Personal carving projects" },
+          { "time": "17:00", "location": "town_tavern", "activity": "Listens to others' stories" }
+        ],
+        "raidBehavior": "Reinforces barricades, repairs damaged structures mid-raid"
+      },
+      "dialogueTriggers": {
+        "firstMeeting": "dialogue_cedric_intro",
+        "lowFriendship": "dialogue_cedric_nod",
+        "highFriendship": "dialogue_cedric_gift"
+      },
+      "giftPreferences": {
+        "loved": ["mat_wood", "consume_coffee"],
+        "liked": ["mat_stone", "consume_bread"],
+        "disliked": ["mat_eldritchcrystal", "crop_nightshade"],
+        "hated": ["crop_corpselily"]
+      }
+    },
+    {
+      "id": "npc_agnes",
+      "displayName": "Agnes",
+      "role": "Elder Herbalist",
+      "personality": "Elara's mentor and a grandmother figure to many. Ancient, wise, and unyielding. She remembers what the Hollow was before the darkness came.",
+      "defaultLocation": "forest_cottage",
+      "schedule": {
+        "weekday": [
+          { "time": "06:00", "location": "forest_cottage", "activity": "Brews morning tonic" },
+          { "time": "09:00", "location": "forest_clearing", "activity": "Gathers rare herbs" },
+          { "time": "12:00", "location": "forest_cottage", "activity": "Lunch and potion making" },
+          { "time": "15:00", "location": "town_herbalist_shop", "activity": "Visits Elara, teaches recipes" },
+          { "time": "18:00", "location": "forest_cottage", "activity": "Evening by the hearth" }
+        ],
+        "weekend": [
+          { "time": "07:00", "location": "forest_cottage", "activity": "Slow morning routine" },
+          { "time": "11:00", "location": "town_church", "activity": "Pays respects" },
+          { "time": "14:00", "location": "forest_deep", "activity": "Deep forest foraging" },
+          { "time": "18:00", "location": "forest_cottage", "activity": "Storytelling by fire" }
+        ],
+        "raidBehavior": "Wards her cottage with ancient protections, shelters anyone who finds her"
+      },
+      "dialogueTriggers": {
+        "firstMeeting": "dialogue_agnes_intro",
+        "lowFriendship": "dialogue_agnes_wary",
+        "highFriendship": "dialogue_agnes_wisdom",
+        "questTrigger": "quest_agnes_old_remedies"
+      },
+      "giftPreferences": {
+        "loved": ["crop_bloodroot", "consume_healthpotion"],
+        "liked": ["crop_nightshade", "crop_eternalturnip"],
+        "disliked": ["mat_ironbar", "tool_sword"],
+        "hated": ["mat_bone"]
+      }
+    },
+    {
+      "id": "npc_dorian",
+      "displayName": "Dorian",
+      "role": "Traveling Merchant",
+      "personality": "Enigmatic and silver-tongued, he appears seasonally with wares no one can explain. His origins are unknown and he prefers it that way.",
+      "defaultLocation": "town_market",
+      "schedule": {
+        "weekday": [
+          { "time": "08:00", "location": "town_market", "activity": "Sets up exotic stall" },
+          { "time": "10:00", "location": "town_market", "activity": "Haggling with customers" },
+          { "time": "13:00", "location": "town_tavern", "activity": "Lunch and eavesdropping" },
+          { "time": "15:00", "location": "town_market", "activity": "Afternoon sales" },
+          { "time": "19:00", "location": "town_tavern", "activity": "Trading stories for drinks" },
+          { "time": "23:00", "location": "town_market", "activity": "Sleeps in his caravan" }
+        ],
+        "weekend": [
+          { "time": "09:00", "location": "town_market", "activity": "Special weekend deals" },
+          { "time": "14:00", "location": "town_plaza", "activity": "Street performance and sales" },
+          { "time": "20:00", "location": "town_tavern", "activity": "Late night deals in the corner" }
+        ],
+        "raidBehavior": "Vanishes mysteriously before raids, reappears unscathed after"
+      },
+      "dialogueTriggers": {
+        "firstMeeting": "dialogue_dorian_intro",
+        "lowFriendship": "dialogue_dorian_salesman",
+        "highFriendship": "dialogue_dorian_secrets"
+      },
+      "giftPreferences": {
+        "loved": ["mat_eldritchcrystal", "crop_shadowmelon"],
+        "liked": ["mat_copperbar", "crop_gravepumpkin"],
+        "disliked": ["mat_stone", "consume_bread"],
+        "hated": ["mat_wood"]
+      }
+    },
+    {
+      "id": "npc_nell",
+      "displayName": "Nell",
+      "role": "Orphan Child",
+      "personality": "Curious, fearless, and a born troublemaker. She sneaks into places she shouldn't and always has dirt on her face and mischief in her eyes.",
+      "defaultLocation": "town_orphanage",
+      "schedule": {
+        "weekday": [
+          { "time": "07:00", "location": "town_orphanage", "activity": "Reluctant breakfast" },
+          { "time": "09:00", "location": "town_schoolhouse", "activity": "Fidgets through lessons" },
+          { "time": "12:00", "location": "town_plaza", "activity": "Lunch and troublemaking" },
+          { "time": "14:00", "location": "town_docks", "activity": "Exploring the waterfront" },
+          { "time": "17:00", "location": "forest_edge", "activity": "Sneaking near the forest" },
+          { "time": "19:00", "location": "town_orphanage", "activity": "Dragged back for dinner" }
+        ],
+        "weekend": [
+          { "time": "08:00", "location": "town_plaza", "activity": "Escapes early to play" },
+          { "time": "12:00", "location": "farm_entrance", "activity": "Watches the farm animals" },
+          { "time": "15:00", "location": "graveyard_entrance", "activity": "Daring herself to enter" },
+          { "time": "18:00", "location": "town_orphanage", "activity": "Returns before dark" }
+        ],
+        "raidBehavior": "Hides under beds in orphanage, secretly brave and helps other children stay calm"
+      },
+      "dialogueTriggers": {
+        "firstMeeting": "dialogue_nell_intro",
+        "lowFriendship": "dialogue_nell_shy",
+        "highFriendship": "dialogue_nell_adventure",
+        "questTrigger": "quest_nell_lost_doll"
+      },
+      "giftPreferences": {
+        "loved": ["consume_bread", "crop_shadowmelon"],
+        "liked": ["crop_gravepumpkin", "crop_moonpotato"],
+        "disliked": ["mat_ironore", "mat_copperore"],
+        "hated": ["consume_healthpotion"]
+      }
+    },
+    {
+      "id": "npc_constance",
+      "displayName": "Constance",
+      "role": "Schoolteacher",
+      "personality": "Strict but deeply caring. She pushes her students hard because she knows the Hollow demands strength. Hides her fear behind discipline.",
+      "defaultLocation": "town_schoolhouse",
+      "schedule": {
+        "weekday": [
+          { "time": "06:00", "location": "npc_home_constance", "activity": "Morning preparation and lesson planning" },
+          { "time": "08:00", "location": "town_schoolhouse", "activity": "Morning lessons begin" },
+          { "time": "12:00", "location": "town_schoolhouse", "activity": "Lunch with students" },
+          { "time": "13:00", "location": "town_schoolhouse", "activity": "Afternoon lessons" },
+          { "time": "16:00", "location": "town_library", "activity": "Research and grading" },
+          { "time": "19:00", "location": "npc_home_constance", "activity": "Quiet evening at home" }
+        ],
+        "weekend": [
+          { "time": "08:00", "location": "town_church", "activity": "Morning service" },
+          { "time": "11:00", "location": "town_library", "activity": "Weekend reading" },
+          { "time": "15:00", "location": "town_plaza", "activity": "Supervises children at play" }
+        ],
+        "raidBehavior": "Gathers all children into the schoolhouse cellar, guards them fiercely"
+      },
+      "dialogueTriggers": {
+        "firstMeeting": "dialogue_constance_intro",
+        "lowFriendship": "dialogue_constance_strict",
+        "highFriendship": "dialogue_constance_tender"
+      },
+      "giftPreferences": {
+        "loved": ["consume_coffee", "crop_eternalturnip"],
+        "liked": ["consume_bread", "crop_witchcabbage"],
+        "disliked": ["crop_ghoulpepper", "mat_bone"],
+        "hated": ["mat_eldritchcrystal"]
+      }
+    },
+    {
+      "id": "npc_rufus",
+      "displayName": "Rufus",
+      "role": "Innkeeper",
+      "personality": "Jolly and portly, Rosalind's husband. He runs the rooms upstairs while she runs the bar. Laughs loudly and cooks hearty stews.",
+      "defaultLocation": "town_tavern",
+      "schedule": {
+        "weekday": [
+          { "time": "07:00", "location": "town_tavern", "activity": "Prepares breakfast for guests" },
+          { "time": "09:00", "location": "town_market", "activity": "Buys supplies for the inn" },
+          { "time": "11:00", "location": "town_tavern", "activity": "Cooking lunch stew" },
+          { "time": "15:00", "location": "town_tavern", "activity": "Cleans rooms, greets travelers" },
+          { "time": "19:00", "location": "town_tavern", "activity": "Serves dinner, tells jokes" },
+          { "time": "23:00", "location": "town_tavern", "activity": "Closes up with Rosalind" }
+        ],
+        "weekend": [
+          { "time": "08:00", "location": "town_tavern", "activity": "Big weekend breakfast" },
+          { "time": "12:00", "location": "town_plaza", "activity": "Outdoor cooking event" },
+          { "time": "17:00", "location": "town_tavern", "activity": "Weekend feast preparation" },
+          { "time": "22:00", "location": "town_tavern", "activity": "Late night cleanup" }
+        ],
+        "raidBehavior": "Helps Rosalind barricade tavern, cooks for sheltering villagers"
+      },
+      "dialogueTriggers": {
+        "firstMeeting": "dialogue_rufus_intro",
+        "lowFriendship": "dialogue_rufus_cheerful",
+        "highFriendship": "dialogue_rufus_family"
+      },
+      "giftPreferences": {
+        "loved": ["crop_ghoulpepper", "crop_gravepumpkin"],
+        "liked": ["consume_bread", "crop_moonpotato"],
+        "disliked": ["mat_eldritchcrystal", "crop_corpselily"],
+        "hated": ["mat_bone"]
+      }
+    },
+    {
+      "id": "npc_gareth",
+      "displayName": "Gareth",
+      "role": "Miner",
+      "personality": "Tough and superstitious. Refuses to mine on certain days and leaves offerings at the mine entrance. His hands shake when he speaks of what he's seen below.",
+      "defaultLocation": "mine_entrance",
+      "schedule": {
+        "weekday": [
+          { "time": "05:00", "location": "mine_entrance", "activity": "Checks offerings, enters mine" },
+          { "time": "08:00", "location": "mine_entrance", "activity": "Hauling ore to surface" },
+          { "time": "12:00", "location": "mine_entrance", "activity": "Lunch at mine entrance" },
+          { "time": "13:00", "location": "mine_entrance", "activity": "Afternoon shift" },
+          { "time": "17:00", "location": "town_smithy", "activity": "Delivers ore to Gregor" },
+          { "time": "19:00", "location": "town_tavern", "activity": "Drinks to forget what he saw" }
+        ],
+        "weekend": [
+          { "time": "08:00", "location": "npc_home_gareth", "activity": "Refuses to mine on weekends" },
+          { "time": "11:00", "location": "town_church", "activity": "Prays for protection" },
+          { "time": "15:00", "location": "town_tavern", "activity": "Tells mining tales" }
+        ],
+        "raidBehavior": "Seals the mine entrance, fights with pickaxe"
+      },
+      "dialogueTriggers": {
+        "firstMeeting": "dialogue_gareth_intro",
+        "lowFriendship": "dialogue_gareth_suspicious",
+        "highFriendship": "dialogue_gareth_warnings",
+        "questTrigger": "quest_gareth_deep_mine"
+      },
+      "giftPreferences": {
+        "loved": ["mat_ironore", "consume_staminapotion"],
+        "liked": ["mat_copperore", "consume_coffee"],
+        "disliked": ["crop_corpselily", "mat_eldritchcrystal"],
+        "hated": ["crop_nightshade"]
+      }
+    },
+    {
+      "id": "npc_isolde",
+      "displayName": "Isolde",
+      "role": "Fortune Teller / Seer",
+      "personality": "Mysterious and prophetic, she speaks in visions and half-truths. Her predictions are unsettlingly accurate, and her eyes see things others cannot.",
+      "defaultLocation": "town_caravan",
+      "schedule": {
+        "weekday": [
+          { "time": "09:00", "location": "town_caravan", "activity": "Morning meditation and card reading" },
+          { "time": "11:00", "location": "town_caravan", "activity": "Receives visitors for readings" },
+          { "time": "14:00", "location": "town_plaza", "activity": "Observes the townsfolk" },
+          { "time": "17:00", "location": "graveyard_entrance", "activity": "Communes with spirits" },
+          { "time": "20:00", "location": "town_caravan", "activity": "Stargazing and prophecy" }
+        ],
+        "weekend": [
+          { "time": "10:00", "location": "town_caravan", "activity": "Extended trance sessions" },
+          { "time": "15:00", "location": "forest_clearing", "activity": "Gathering ritual components" },
+          { "time": "20:00", "location": "town_caravan", "activity": "Moonlight divination" }
+        ],
+        "raidBehavior": "Forewarns the town of incoming raids, chants protective incantations"
+      },
+      "dialogueTriggers": {
+        "firstMeeting": "dialogue_isolde_intro",
+        "lowFriendship": "dialogue_isolde_cryptic",
+        "highFriendship": "dialogue_isolde_vision",
+        "questTrigger": "quest_isolde_dark_prophecy"
+      },
+      "giftPreferences": {
+        "loved": ["mat_eldritchcrystal", "crop_nightshade"],
+        "liked": ["crop_bloodroot", "crop_corpselily"],
+        "disliked": ["mat_ironbar", "consume_bread"],
+        "hated": ["mat_stone"]
+      }
+    },
+    {
+      "id": "npc_bram",
+      "displayName": "Bram",
+      "role": "Undertaker",
+      "personality": "Deathly pale with a bone-dry sense of morbid humor. He takes pride in giving the dead a proper send-off and finds the living exhausting.",
+      "defaultLocation": "graveyard_chapel",
+      "schedule": {
+        "weekday": [
+          { "time": "06:00", "location": "graveyard_chapel", "activity": "Prepares the chapel" },
+          { "time": "08:00", "location": "graveyard", "activity": "Inspects plots with Silas" },
+          { "time": "11:00", "location": "graveyard_chapel", "activity": "Builds coffins" },
+          { "time": "14:00", "location": "town_workshop", "activity": "Orders wood from Cedric" },
+          { "time": "17:00", "location": "graveyard_chapel", "activity": "Evening preparations" },
+          { "time": "21:00", "location": "graveyard_chapel", "activity": "Sleeps in back room" }
+        ],
+        "weekend": [
+          { "time": "07:00", "location": "graveyard_chapel", "activity": "Polishes headstones" },
+          { "time": "12:00", "location": "town_tavern", "activity": "Quiet lunch in the corner" },
+          { "time": "16:00", "location": "graveyard", "activity": "Plants memorial flowers" }
+        ],
+        "raidBehavior": "Ensures the dead stay dead, patrols graveyard with holy water"
+      },
+      "dialogueTriggers": {
+        "firstMeeting": "dialogue_bram_intro",
+        "lowFriendship": "dialogue_bram_deadpan",
+        "highFriendship": "dialogue_bram_gallows"
+      },
+      "giftPreferences": {
+        "loved": ["mat_bone", "mat_wood"],
+        "liked": ["crop_corpselily", "crop_gravepumpkin"],
+        "disliked": ["consume_coffee", "crop_ghoulpepper"],
+        "hated": ["consume_staminapotion"]
+      }
+    },
+    {
+      "id": "npc_wren",
+      "displayName": "Wren",
+      "role": "Stablehand / Animal Keeper",
+      "personality": "Gentle and soft-spoken around animals, awkward around people. She has a gift for calming even the most spooked creatures.",
+      "defaultLocation": "town_stables",
+      "schedule": {
+        "weekday": [
+          { "time": "05:00", "location": "town_stables", "activity": "Feeds and grooms animals" },
+          { "time": "08:00", "location": "town_stables", "activity": "Cleans stalls" },
+          { "time": "11:00", "location": "farm_entrance", "activity": "Checks on farm livestock" },
+          { "time": "14:00", "location": "town_stables", "activity": "Afternoon care routines" },
+          { "time": "17:00", "location": "forest_edge", "activity": "Walks horses near the woods" },
+          { "time": "20:00", "location": "town_stables", "activity": "Sleeps near the animals" }
+        ],
+        "weekend": [
+          { "time": "06:00", "location": "town_stables", "activity": "Morning feeding" },
+          { "time": "10:00", "location": "forest_clearing", "activity": "Grazing the horses" },
+          { "time": "15:00", "location": "town_stables", "activity": "Mends tack and saddles" },
+          { "time": "19:00", "location": "town_tavern", "activity": "Shy evening drink" }
+        ],
+        "raidBehavior": "Calms panicked animals, leads livestock to safety"
+      },
+      "dialogueTriggers": {
+        "firstMeeting": "dialogue_wren_intro",
+        "lowFriendship": "dialogue_wren_mumble",
+        "highFriendship": "dialogue_wren_trust"
+      },
+      "giftPreferences": {
+        "loved": ["crop_moonpotato", "crop_eternalturnip"],
+        "liked": ["crop_witchcabbage", "consume_bread"],
+        "disliked": ["tool_sword", "mat_ironbar"],
+        "hated": ["mat_bone"]
+      }
+    },
+    {
+      "id": "npc_edmund",
+      "displayName": "Edmund",
+      "role": "Retired Adventurer",
+      "personality": "A grizzled old warrior who settled on the outskirts. Tells war stories that sound exaggerated until you see his scars. Haunted by what he's fought.",
+      "defaultLocation": "forest_cabin",
+      "schedule": {
+        "weekday": [
+          { "time": "06:00", "location": "forest_cabin", "activity": "Morning exercises and stretches" },
+          { "time": "09:00", "location": "forest_edge", "activity": "Patrols his territory" },
+          { "time": "12:00", "location": "forest_cabin", "activity": "Sharpens weapons over lunch" },
+          { "time": "15:00", "location": "town_tavern", "activity": "Afternoon ale and stories" },
+          { "time": "18:00", "location": "town_guardpost", "activity": "Advises Thorne on defenses" },
+          { "time": "21:00", "location": "forest_cabin", "activity": "Sleeps lightly, sword nearby" }
+        ],
+        "weekend": [
+          { "time": "07:00", "location": "forest_cabin", "activity": "Maintains gear" },
+          { "time": "11:00", "location": "town_plaza", "activity": "Teaches combat to volunteers" },
+          { "time": "16:00", "location": "town_tavern", "activity": "Weekend storytelling" },
+          { "time": "20:00", "location": "forest_cabin", "activity": "Keeps watch from cabin" }
+        ],
+        "raidBehavior": "Grabs his old sword and fights on the front lines"
+      },
+      "dialogueTriggers": {
+        "firstMeeting": "dialogue_edmund_intro",
+        "lowFriendship": "dialogue_edmund_guarded",
+        "highFriendship": "dialogue_edmund_brotherhood",
+        "questTrigger": "quest_edmund_old_battlefield"
+      },
+      "giftPreferences": {
+        "loved": ["tool_sword", "consume_staminapotion"],
+        "liked": ["mat_ironbar", "consume_coffee"],
+        "disliked": ["crop_corpselily", "mat_eldritchcrystal"],
+        "hated": ["crop_nightshade"]
+      }
+    },
+    {
+      "id": "npc_petra",
+      "displayName": "Petra",
+      "role": "Alchemist's Apprentice",
+      "personality": "Clumsy but talented, she works under Elara and causes small explosions regularly. Her enthusiasm outpaces her skill, but she's learning fast.",
+      "defaultLocation": "town_herbalist_shop",
+      "schedule": {
+        "weekday": [
+          { "time": "07:00", "location": "npc_home_petra", "activity": "Rushed breakfast" },
+          { "time": "08:00", "location": "town_herbalist_shop", "activity": "Opens shop for Elara" },
+          { "time": "10:00", "location": "town_herbalist_shop", "activity": "Potion practice" },
+          { "time": "13:00", "location": "town_plaza", "activity": "Quick lunch" },
+          { "time": "14:00", "location": "forest_clearing", "activity": "Herb gathering for Elara" },
+          { "time": "18:00", "location": "town_tavern", "activity": "Evening socializing" }
+        ],
+        "weekend": [
+          { "time": "09:00", "location": "town_herbalist_shop", "activity": "Extra study time" },
+          { "time": "13:00", "location": "forest_cottage", "activity": "Lessons with Agnes" },
+          { "time": "17:00", "location": "town_plaza", "activity": "Relaxing afternoon" }
+        ],
+        "raidBehavior": "Mixes emergency potions, hands them out to defenders"
+      },
+      "dialogueTriggers": {
+        "firstMeeting": "dialogue_petra_intro",
+        "lowFriendship": "dialogue_petra_nervous",
+        "highFriendship": "dialogue_petra_eager"
+      },
+      "giftPreferences": {
+        "loved": ["crop_bloodroot", "consume_healthpotion"],
+        "liked": ["crop_nightshade", "consume_staminapotion"],
+        "disliked": ["mat_stone", "mat_ironore"],
+        "hated": ["tool_sword"]
+      }
+    },
+    {
+      "id": "npc_magnus",
+      "displayName": "Magnus",
+      "role": "Blacksmith's Apprentice",
+      "personality": "An eager young man who idolizes Gregor. Strong as an ox but naive about the world. He dreams of forging a legendary weapon someday.",
+      "defaultLocation": "town_smithy",
+      "schedule": {
+        "weekday": [
+          { "time": "05:30", "location": "town_smithy", "activity": "Lights the forge before Gregor arrives" },
+          { "time": "06:00", "location": "town_smithy", "activity": "Apprentice duties" },
+          { "time": "12:00", "location": "town_tavern", "activity": "Lunch break" },
+          { "time": "13:00", "location": "town_smithy", "activity": "Practices hammering" },
+          { "time": "17:00", "location": "town_guardpost", "activity": "Delivers repaired weapons" },
+          { "time": "19:00", "location": "town_tavern", "activity": "Evening with friends" }
+        ],
+        "weekend": [
+          { "time": "07:00", "location": "town_smithy", "activity": "Personal forging projects" },
+          { "time": "12:00", "location": "mine_entrance", "activity": "Helps Gareth haul ore" },
+          { "time": "16:00", "location": "town_plaza", "activity": "Shows off his work" }
+        ],
+        "raidBehavior": "Fights alongside Gregor at the town gate with a heavy hammer"
+      },
+      "dialogueTriggers": {
+        "firstMeeting": "dialogue_magnus_intro",
+        "lowFriendship": "dialogue_magnus_shy",
+        "highFriendship": "dialogue_magnus_hero"
+      },
+      "giftPreferences": {
+        "loved": ["mat_ironbar", "mat_copperbar"],
+        "liked": ["mat_ironore", "consume_staminapotion"],
+        "disliked": ["crop_nightshade", "crop_corpselily"],
+        "hated": ["mat_cloth"]
+      }
+    },
+    {
+      "id": "npc_cordelia",
+      "displayName": "Cordelia",
+      "role": "Noblewoman",
+      "personality": "A fallen aristocrat haunted by her family's dark past. She clings to faded elegance and speaks of the manor as though it still stands in its former glory.",
+      "defaultLocation": "manor_ruins",
+      "schedule": {
+        "weekday": [
+          { "time": "08:00", "location": "manor_ruins", "activity": "Wanders the ruins, reminiscing" },
+          { "time": "10:00", "location": "manor_ruins", "activity": "Tends the overgrown garden" },
+          { "time": "13:00", "location": "town_tavern", "activity": "Takes lunch alone at a corner table" },
+          { "time": "15:00", "location": "town_library", "activity": "Reads family histories" },
+          { "time": "18:00", "location": "town_church", "activity": "Evening prayer for her family" },
+          { "time": "21:00", "location": "manor_ruins", "activity": "Returns to the ruins to sleep" }
+        ],
+        "weekend": [
+          { "time": "09:00", "location": "manor_ruins", "activity": "Morning in the ruins" },
+          { "time": "12:00", "location": "town_tailor", "activity": "Mends her aging wardrobe" },
+          { "time": "16:00", "location": "graveyard", "activity": "Visits family crypts" }
+        ],
+        "raidBehavior": "Retreats deep into the manor ruins' hidden cellars"
+      },
+      "dialogueTriggers": {
+        "firstMeeting": "dialogue_cordelia_intro",
+        "lowFriendship": "dialogue_cordelia_distant",
+        "highFriendship": "dialogue_cordelia_tragedy",
+        "questTrigger": "quest_cordelia_family_heirloom"
+      },
+      "giftPreferences": {
+        "loved": ["mat_cloth", "crop_corpselily"],
+        "liked": ["consume_coffee", "mat_eldritchcrystal"],
+        "disliked": ["mat_ironore", "crop_ghoulpepper"],
+        "hated": ["mat_bone"]
+      }
+    },
+    {
+      "id": "npc_fletcher",
+      "displayName": "Fletcher",
+      "role": "Hunter / Ranger",
+      "personality": "A quiet tracker who lives in the forest and knows its paths better than anyone. He speaks rarely, moves silently, and trusts the woods more than people.",
+      "defaultLocation": "forest_lodge",
+      "schedule": {
+        "weekday": [
+          { "time": "04:00", "location": "forest_lodge", "activity": "Pre-dawn preparation" },
+          { "time": "05:00", "location": "forest_deep", "activity": "Morning hunt" },
+          { "time": "10:00", "location": "forest_clearing", "activity": "Checks traps and snares" },
+          { "time": "13:00", "location": "forest_lodge", "activity": "Cleans and prepares game" },
+          { "time": "16:00", "location": "town_market", "activity": "Sells pelts and meat" },
+          { "time": "19:00", "location": "forest_lodge", "activity": "Returns to the forest" }
+        ],
+        "weekend": [
+          { "time": "05:00", "location": "forest_deep", "activity": "Extended tracking expedition" },
+          { "time": "12:00", "location": "forest_lodge", "activity": "Maintaining equipment" },
+          { "time": "17:00", "location": "town_tavern", "activity": "Rare social visit" }
+        ],
+        "raidBehavior": "Scouts enemy movements from the treeline, picks off threats with arrows"
+      },
+      "dialogueTriggers": {
+        "firstMeeting": "dialogue_fletcher_intro",
+        "lowFriendship": "dialogue_fletcher_silence",
+        "highFriendship": "dialogue_fletcher_respect",
+        "questTrigger": "quest_fletcher_beast_hunt"
+      },
+      "giftPreferences": {
+        "loved": ["mat_wood", "consume_staminapotion"],
+        "liked": ["mat_copperore", "tool_fishingrod"],
+        "disliked": ["mat_cloth", "crop_corpselily"],
+        "hated": ["mat_eldritchcrystal"]
+      }
+    },
+    {
+      "id": "npc_minerva",
+      "displayName": "Minerva",
+      "role": "Nun / Acolyte",
+      "personality": "Devout and kind, she assists Father Ashton at the church. Her faith is genuine and unwavering, a rare light in the Hollow's darkness.",
+      "defaultLocation": "town_church",
+      "schedule": {
+        "weekday": [
+          { "time": "05:00", "location": "town_church", "activity": "Dawn prayers with Father Ashton" },
+          { "time": "07:00", "location": "town_church", "activity": "Cleaning and preparing the altar" },
+          { "time": "10:00", "location": "town_orphanage", "activity": "Teaches children scripture" },
+          { "time": "13:00", "location": "town_church", "activity": "Midday reflection" },
+          { "time": "15:00", "location": "town_plaza", "activity": "Distributes charity to the poor" },
+          { "time": "19:00", "location": "town_church", "activity": "Evening vespers" }
+        ],
+        "weekend": [
+          { "time": "06:00", "location": "town_church", "activity": "Extended morning service" },
+          { "time": "11:00", "location": "graveyard", "activity": "Blesses the graves" },
+          { "time": "15:00", "location": "town_church", "activity": "Meditation and prayer" },
+          { "time": "19:00", "location": "town_church", "activity": "Evening candlelight vigil" }
+        ],
+        "raidBehavior": "Prays over the wounded, provides comfort and first aid in the church sanctuary"
+      },
+      "dialogueTriggers": {
+        "firstMeeting": "dialogue_minerva_intro",
+        "lowFriendship": "dialogue_minerva_gentle",
+        "highFriendship": "dialogue_minerva_blessing"
+      },
+      "giftPreferences": {
+        "loved": ["consume_healthpotion", "crop_eternalturnip"],
+        "liked": ["consume_bread", "crop_witchcabbage"],
+        "disliked": ["mat_bone", "crop_nightshade"],
+        "hated": ["mat_eldritchcrystal"]
+      }
     }
   ]
 }

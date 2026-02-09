@@ -1,20 +1,21 @@
 # Open Design Questions for Havenwood Hollow
 
 > Decisions that need to be made before or during Unity development.  
-> Each question includes context, options, and what depends on the answer.
+> Each question includes context, options, and what depends on the answer.  
+> ✅ = Resolved | ❓ = Still Open
 
 ---
 
 ## 1. World & Setting
 
-### Q1.1: How large is the player's farm?
-**Context:** The Plan specifies Job System optimization for 10,000+ crops, but doesn't define actual farm dimensions.  
-**Options:**
-- (A) Small: 40×40 tiles (~1,600 plantable tiles) — cozy, manageable
-- (B) Medium: 64×64 tiles (~4,096 plantable tiles) — comparable to Stardew
-- (C) Large: 100×100 tiles (~10,000 plantable tiles) — sprawling Gothic estate  
+### Q1.1: How large is the player's farm? ✅ RESOLVED
+**Decision:** Same as Stardew Valley — **~80×65 tiles** (~5,200 plantable tiles).  
+**Rationale:** Matches the proven Stardew Valley standard farm layout. Large enough for meaningful farming with Job System optimization, familiar scope for genre fans.
 
-**Depends on:** Tilemap size, camera zoom level, movement speed feel, crop balancing.
+~~**Options:**~~
+- ~~(A) Small: 40×40 tiles~~
+- **(B) Medium: ~80×65 tiles — matching Stardew Valley** ✅
+- ~~(C) Large: 100×100 tiles~~
 
 ### Q1.2: How many distinct locations/scenes exist?
 **Context:** Plan mentions Farm, Town, Mine/Dungeon, Forest. Are there more?  
@@ -37,23 +38,23 @@
 
 ## 2. Time & Seasons
 
-### Q2.1: How long is a single in-game day in real minutes?
-**Context:** Plan defines a 24-hour cycle with TimeManager but not the real-time duration.  
-**Options:**
-- (A) 14 minutes (Stardew Valley standard)
-- (B) 20 minutes (more relaxed pacing for Gothic exploration)
-- (C) Configurable via settings  
+### Q2.1: How long is a single in-game day in real minutes? ✅ RESOLVED
+**Decision:** Same as Stardew Valley — **14 real-time minutes** per in-game day (840 seconds).  
+**Rationale:** Proven pacing that balances farming tasks, exploration, and social interactions within a single day.
 
-**Depends on:** Crop growth balance, stamina management, raid timing, player experience.
+~~**Options:**~~
+- **(A) 14 minutes (Stardew Valley standard)** ✅
+- ~~(B) 20 minutes~~
+- ~~(C) Configurable~~
 
-### Q2.2: How many days per season?
-**Context:** Plan doesn't specify.  
-**Options:**
-- (A) 28 days (Stardew standard, 4 weeks)
-- (B) 14 days (faster progression, more compact)
-- (C) 30 days (calendar month)  
+### Q2.2: How many days per season? ✅ RESOLVED
+**Decision:** Same as Stardew Valley — **28 days per season** (4 weeks).  
+**Rationale:** Standard farming game pacing. Aligns with existing SeasonManager default. Provides enough time for crop cycles and seasonal events.
 
-**Depends on:** Crop growth tables, seasonal events, economy pacing.
+~~**Options:**~~
+- **(A) 28 days (Stardew standard, 4 weeks)** ✅
+- ~~(B) 14 days~~
+- ~~(C) 30 days~~
 
 ### Q2.3: What happens in Winter?
 **Context:** Most farming games restrict farming in winter. Gothic theme could make winter uniquely dangerous.  
@@ -68,14 +69,14 @@
 
 ## 3. Combat & Raids
 
-### Q3.1: Is combat real-time action or turn-based?
-**Context:** Plan implies real-time (Physics2D overlap, GOAP actions like AttackEnemy), but doesn't explicitly state it.  
-**Options:**
-- (A) Real-time action combat (click/button to swing, dodge, use items)
-- (B) Stardew-style simplified swing (single attack button, auto-aim nearest)
-- (C) Hybrid: normal enemies are real-time, bosses have turn-based phases  
+### Q3.1: Is combat real-time action or turn-based? ✅ RESOLVED
+**Decision:** **Simplified Stardew-style combat** — single attack button, auto-aim nearest enemy, simple hitboxes.  
+**Rationale:** Reduces animation complexity, keeps focus on farming/breeding loop, accessible to casual players. Weapons use the same Physics2D.OverlapCircle system as tools.
 
-**Depends on:** Animation requirements, hitbox design, tool/weapon system, difficulty tuning.
+~~**Options:**~~
+- ~~(A) Real-time action combat~~
+- **(B) Stardew-style simplified swing** ✅
+- ~~(C) Hybrid~~
 
 ### Q3.2: How frequent are raids?
 **Context:** Plan mentions nightly raids driven by GOAP, but doesn't define frequency.  
@@ -110,14 +111,14 @@
 
 ## 4. Characters & NPCs
 
-### Q4.1: How many NPCs are there?
-**Context:** Plan mentions villagers with GOAP behaviors but doesn't list characters.  
-**Options:**
-- (A) 8-10 core NPCs (small village, easier to develop)
-- (B) 15-20 NPCs (more diverse community)
-- (C) 25+ NPCs (full Stardew-scale town)  
+### Q4.1: How many NPCs are there? ✅ RESOLVED
+**Decision:** **30-50 NPCs** — a large, bustling Gothic village exceeding Stardew's roster.  
+**Rationale:** Supports the ambition of a rich Gothic community. Stardew Valley has ~30 named NPCs. We aim for 30-50 with unique schedules, dialogue, and GOAP behaviors. This is a significant art and writing investment but creates a living world.
 
-**Depends on:** Dialogue writing workload, portrait assets, schedule complexity, romance options.
+~~**Options:**~~
+- ~~(A) 8-10 core NPCs~~
+- ~~(B) 15-20 NPCs~~
+- **(D) 30-50 NPCs (ambitious Gothic village)** ✅
 
 ### Q4.2: Is there a romance/relationship system?
 **Context:** Plan references "Socialize" as a GOAP goal but doesn't define relationships.  
@@ -193,15 +194,25 @@
 
 **Depends on:** Sprite workload (each needs idle, walk, attack, special animations × trait variants).
 
-### Q6.2: What do creatures do for the player?
-**Context:** Plan mentions breeding but not utility.  
-**Options:**
-- (A) Combat companions that fight alongside the player in raids
-- (B) Farm helpers (auto-water, auto-harvest based on traits)
-- (C) Both combat and farming utility based on trait expression
-- (D) Collectibles with exhibition/contest mechanics  
+### Q6.2: What do creatures do for the player? ✅ RESOLVED
+**Decision:** **Both combat and farming utility** based on genetic trait expression.  
+**Rationale:** Maximizes the value of the breeding system. Creatures with Wings/HardenedScale excel in combat; creatures with Bioluminescence/NightVision help on the farm. Trait expression determines role, giving breeding strategic depth.
 
-**Depends on:** Creature AI, trait gameplay effects, UI for creature management.
+**Gameplay Effects by Trait:**
+| Trait | Combat Utility | Farm Utility |
+|-------|---------------|--------------|
+| NightVision | Scouts enemies in dark | Harvests at night automatically |
+| Wings | Dodges attacks, aerial strikes | Pollinates crops (growth boost) |
+| HardenedScale | Absorbs damage (tank) | Breaks rocks on farm |
+| Venomous | Poison DOT on enemies | Pest control (prevents crop disease) |
+| Bioluminescence | Reveals invisible enemies | Acts as portable light source |
+| ShadowForm | Stealth flanking attacks | Scares away crows/pests |
+
+~~**Options:**~~
+- ~~(A) Combat companions~~
+- ~~(B) Farm helpers~~
+- **(C) Both combat and farming utility** ✅
+- ~~(D) Collectibles~~
 
 ### Q6.3: Can creatures die permanently?
 **Context:** Not addressed.  
@@ -216,14 +227,20 @@
 
 ## 7. Technical Decisions
 
-### Q7.1: What is the target resolution and pixel scale?
-**Context:** Plan says "16-bit pixel art" and "32-bit style" in different sections.  
-**Options:**
-- (A) 16×16 tile size, 320×180 base resolution (classic 16-bit)
-- (B) 32×32 tile size, 640×360 base resolution (higher detail, more asset work)
-- (C) 16×16 tiles with 32×32 characters (mixed, common in indie games)  
+### Q7.1: What is the target resolution and pixel scale? ✅ RESOLVED
+**Decision:** **16×16 tile size, 320×180 base resolution** (classic 16-bit pixel art).  
+**Rationale:** Lower asset complexity enables faster iteration with the 30-50 NPC target. Classic pixel art style matches the Gothic horror aesthetic. All assets in `asset-requirements.md` are calibrated to this size.
 
-**Depends on:** Every sprite asset, tileset design, camera configuration, UI scaling.
+**Confirmed Specs:**
+- Tile size: 16×16 pixels
+- Character sprite size: 16×32 pixels (1×2 tiles)
+- Base resolution: 320×180 (16:9, scales to 1920×1080 at 6x)
+- Pixels per unit: 16
+
+~~**Options:**~~
+- **(A) 16×16 tile size, 320×180 base resolution** ✅
+- ~~(B) 32×32 tile size~~
+- ~~(C) Mixed~~
 
 ### Q7.2: What save format should be used?
 **Context:** SaveSystem.cs currently uses JSON. Plan mentions binary.  
@@ -245,13 +262,15 @@
 
 ---
 
-## Priority Decisions Needed
+## Priority Decisions — ✅ ALL RESOLVED
 
-The following questions **must** be answered before meaningful Unity work begins:
+All 6 priority decisions have been made. Unity development can proceed.
 
-1. **Q7.1** — Tile/pixel resolution (affects ALL art assets)
-2. **Q2.1 & Q2.2** — Day length and season length (affects all time-based balancing)
-3. **Q3.1** — Combat style (affects animation requirements and tool system)
-4. **Q4.1** — NPC count (affects portrait/sprite workload)
-5. **Q6.2** — Creature utility (affects creature AI and farm integration)
-6. **Q1.1** — Farm size (affects tilemap setup and camera zoom)
+| # | Question | Decision | Impact |
+|---|----------|----------|--------|
+| 1 | **Q7.1** — Tile/pixel resolution | **16×16 tiles, 320×180 base** | All art assets calibrated to 16px grid |
+| 2 | **Q2.1 & Q2.2** — Day/season length | **14 min days, 28 days/season** | Time-based balancing locked |
+| 3 | **Q3.1** — Combat style | **Simplified Stardew-style** | Minimal combat animation needs |
+| 4 | **Q4.1** — NPC count | **30-50 NPCs** | Major art/writing investment |
+| 5 | **Q6.2** — Creature utility | **Both combat + farming** | Trait system has dual purpose |
+| 6 | **Q1.1** — Farm size | **~80×65 tiles (Stardew-scale)** | Tilemap and camera configured |

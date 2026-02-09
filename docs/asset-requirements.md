@@ -23,8 +23,10 @@
 
 | Property | Value |
 |----------|-------|
-| **Tile Size** | 16×16 pixels (recommended, see Design Questions Q7.1) |
-| **Character Sprite Size** | 16×32 pixels (1×2 tiles) or 32×32 pixels |
+| **Tile Size** | **16×16 pixels** ✅ CONFIRMED (see Design Questions Q7.1) |
+| **Character Sprite Size** | **16×32 pixels** (1×2 tiles) |
+| **Base Resolution** | **320×180** (16:9, scales to 1920×1080 at 6x) |
+| **Pixels Per Unit** | **16** |
 | **Color Palette** | Gothic palette — muted purples, deep greens, charcoal greys, blood reds, bone whites, sickly yellows |
 | **Art Style** | 16-bit pixel art, top-down perspective (slight ¾ angle for characters) |
 | **Animation Frame Rate** | 8-12 FPS for character animations |
@@ -116,7 +118,7 @@
 **AI Prompt (base sprite):**
 > `pixel art sprite sheet, gothic farmer character, top-down RPG, dark cloak and worn boots, pale complexion, 4 directional walk cycle, idle pose, 16x32 pixel character on 16x16 grid, muted earth tones with purple undertones, transparent background, sequential animation frames, retro 16-bit style --v 6.0 --ar 16:9`
 
-### 2.2 NPC Sprites (per NPC — estimate 10-20 needed)
+### 2.2 NPC Sprites (per NPC — 30-50 needed, see Q4.1)
 **Files Needed:** 1 sprite sheet per NPC  
 **Animations Required (4 directions each):**
 - Idle (2 frames)
@@ -428,8 +430,8 @@ These are drawn on top of the base creature to show expressed genetic traits.
 |----------|----------------|
 | Tilesets | 5 major sets (~500+ individual tiles) |
 | Player Sprites | 1 base + variants (~200 frames) |
-| NPC Sprites | 10-20 characters (~80-160 frames each) |
-| NPC Portraits | 10-20 × 6 expressions (~60-120 portraits) |
+| NPC Sprites | 30-50 characters (~80-160 frames each) |
+| NPC Portraits | 30-50 × 6 expressions (~180-300 portraits) |
 | Crop Sprites | 15-20 crops × 5 phases (~75-100 sprites) |
 | Creature Sprites | 8-12 species (~80-120 frames each) |
 | Enemy Sprites | 6 types + 1 boss (~100-150 frames each) |
@@ -441,4 +443,4 @@ These are drawn on top of the base creature to show expressed genetic traits.
 | Music Tracks | 12 tracks |
 | Sound Effects | ~80 individual sounds |
 | Ambient Loops | 6 loops |
-| **Total Estimated** | **~1,500-2,000 visual assets + ~100 audio assets** |
+| **Total Estimated** | **~2,500-3,500 visual assets + ~100 audio assets** |

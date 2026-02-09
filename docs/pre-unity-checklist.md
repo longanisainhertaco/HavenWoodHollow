@@ -35,7 +35,25 @@ These items can be created, reviewed, and refined in any text editor or IDE. The
 |----------|--------|---------|
 | `docs/pre-unity-checklist.md` | ✅ This file | Tracks what can be done now |
 | `docs/asset-requirements.md` | ✅ Created | Every art/audio asset needed with AI prompts |
-| `docs/design-questions.md` | ✅ Created | Open questions requiring design decisions |
+| `docs/design-questions.md` | ✅ Updated | 6 priority decisions RESOLVED; remaining questions still open |
+
+### Design Decisions (Confirmed)
+
+| Decision | Answer | Reference |
+|----------|--------|-----------|
+| Tile/pixel resolution | **16×16 tiles, 320×180 base** | Q7.1 |
+| Day length | **14 minutes (840s)** | Q2.1 |
+| Season length | **28 days per season** | Q2.2 |
+| Combat style | **Simplified Stardew-style** | Q3.1 |
+| NPC count | **30-50 NPCs** | Q4.1 |
+| Creature utility | **Both combat + farming** | Q6.2 |
+| Farm size | **~80×65 tiles** | Q1.1 |
+
+### Game Constants
+
+| File | Status | Purpose |
+|------|--------|---------|
+| `Scripts/Core/GameConstants.cs` | ✅ Created | Central reference for all confirmed design values |
 
 ---
 
