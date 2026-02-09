@@ -1,0 +1,31 @@
+{
+  "name": "com.havenwoodhollow.mcp-bridge",
+  "version": "1.0.0",
+  "displayName": "MCP Bridge for Claude",
+  "description": "Enables AI-assisted game development by connecting Claude Desktop/Code to the Unity Editor via the Model Context Protocol.",
+  "unity": "2021.3",
+  "unityRelease": "0f1",
+  "documentationUrl": "https://github.com/longanisainhertaco/HavenWoodHollow",
+  "changelogUrl": "https://github.com/longanisainhertaco/HavenWoodHollow/blob/main/CHANGELOG.md",
+  "licensesUrl": "https://github.com/longanisainhertaco/HavenWoodHollow/blob/main/LICENSE",
+  "keywords": [
+    "mcp",
+    "claude",
+    "ai",
+    "assistant",
+    "automation",
+    "editor"
+  ],
+  "author": {
+    "name": "HavenWoodHollow",
+    "url": "https://github.com/longanisainhertaco"
+  },
+  "type": "tool",
+  "samples": [
+    {
+      "displayName": "Example Workflows",
+      "description": "Example workflow configurations for common game development tasks",
+      "path": "Samples~/Workflows"
+    }
+  ]
+}

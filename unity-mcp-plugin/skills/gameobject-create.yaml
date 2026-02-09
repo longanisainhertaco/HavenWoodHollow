@@ -1,0 +1,139 @@
+skill:
+  name: gameobject.create-with-components
+  category: gameobject-operations
+  version: "1.0"
+  description: |
+    Creates a new GameObject with specified components and configuration.
+    Supports primitives, empty objects, and full component setup.
+
+inputs:
+  - name: name
+    type: string
+    required: true
+    description: Name for the new GameObject
+    
+  - name: primitiveType
+    type: enum
+    options: [empty, cube, sphere, capsule, cylinder, plane, quad]
+    default: empty
+    description: Type of primitive to create
+    
+  - name: parent
+    type: string
+    required: false
+    description: Parent GameObject name or path
+    
+  - name: position
+    type: object
+    required: false
+    default: { x: 0, y: 0, z: 0 }
+    description: World position
+    
+  - name: rotation
+    type: object
+    required: false
+    default: { x: 0, y: 0, z: 0 }
+    description: Euler rotation angles
+    
+  - name: scale
+    type: object
+    required: false
+    default: { x: 1, y: 1, z: 1 }
+    description: Local scale
+    
+  - name: tag
+    type: string
+    required: false
+    description: Tag to assign
+    
+  - name: layer
+    type: string
+    required: false
+    description: Layer to assign
+    
+  - name: components
+    type: array
+    required: false
+    description: |
+      Components to add with optional properties:
+      [{ type: "Rigidbody", properties: { mass: 1, useGravity: true } }]
+    
+  - name: isStatic
+    type: boolean
+    default: false
+    description: Mark as static for optimization
+
+outputs:
+  - name: gameObjectPath
+    type: string
+    description: Path to the created GameObject in hierarchy
+    
+  - name: success
+    type: boolean
+    description: Whether creation was successful
+
+implementation:
+  steps:
+    - tool: unity_gameobject_create
+      params:
+        name: "{{inputs.name}}"
+        primitiveType: "{{inputs.primitiveType}}"
+        parent: "{{inputs.parent}}"
+        position: "{{inputs.position}}"
+        rotation: "{{inputs.rotation}}"
+        scale: "{{inputs.scale}}"
+        tag: "{{inputs.tag}}"
+        layer: "{{inputs.layer}}"
+        isStatic: "{{inputs.isStatic}}"
+      output: createResult
+      
+    - foreach: "{{inputs.components}}"
+      as: component
+      do:
+        - tool: unity_component_add
+          params:
+            target: "{{inputs.name}}"
+            componentType: "{{component.type}}"
+            properties: "{{component.properties}}"
+
+examples:
+  - name: Player Character
+    inputs:
+      name: Player
+      primitiveType: capsule
+      position: { x: 0, y: 1, z: 0 }
+      tag: Player
+      components:
+        - type: CharacterController
+          properties:
+            height: 2
+            radius: 0.5
+        - type: Rigidbody
+          properties:
+            isKinematic: true
+
+  - name: Physics Cube
+    inputs:
+      name: PhysicsCube
+      primitiveType: cube
+      position: { x: 0, y: 5, z: 0 }
+      components:
+        - type: Rigidbody
+          properties:
+            mass: 1
+            useGravity: true
+        - type: BoxCollider
+
+  - name: UI Canvas
+    inputs:
+      name: MainCanvas
+      primitiveType: empty
+      components:
+        - type: Canvas
+          properties:
+            renderMode: 0 # Screen Space - Overlay
+        - type: CanvasScaler
+          properties:
+            uiScaleMode: 1 # Scale With Screen Size
+            referenceResolution: { x: 1920, y: 1080 }
+        - type: GraphicRaycaster

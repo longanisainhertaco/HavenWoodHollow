@@ -1,0 +1,267 @@
+name: character-creation
+description: Creates a playable character with movement, animation controller, and basic components. Note - this workflow provides templates that Claude should interpret and generate appropriate code for.
+version: "1.0"
+
+prerequisites:
+  - Unity Editor is running
+  - MCP Bridge is connected
+  - A scene is loaded
+
+parameters:
+  - name: characterName
+    type: string
+    required: true
+    default: "Player"
+    description: Name for the character GameObject and scripts
+    
+  - name: characterType
+    type: enum
+    options: [Player, NPC, Enemy]
+    required: true
+    default: Player
+    description: Type of character to create
+    
+  - name: movementType
+    type: enum
+    options: [TopDown2D, Platformer2D, FirstPerson3D, ThirdPerson3D, PointAndClick]
+    required: true
+    description: Movement style for the character
+    
+  - name: hasHealthSystem
+    type: boolean
+    default: true
+    description: Include health and damage system
+    
+  - name: maxHealth
+    type: number
+    default: 100
+    description: Maximum health for the character
+
+# Note: This workflow is a template for Claude to follow.
+# Claude should interpret the parameters and generate appropriate code.
+# The content fields below are examples - Claude should adapt them based on movementType.
+
+steps:
+  # Step 1: Create character GameObject
+  - name: create-character-object
+    description: Create the main character GameObject
+    tool: unity_gameobject_create
+    params:
+      name: "[characterName]"
+      primitiveType: capsule
+      position:
+        x: 0
+        y: 1
+        z: 0
+      tag: "[characterType]"
+    on_error: abort
+
+  # Step 2: Create movement script based on type
+  # Claude should generate the appropriate script content based on movementType
+  - name: create-movement-script
+    description: |
+      Create the appropriate movement controller script.
+      The script content should be generated based on the movementType parameter:
+      - TopDown2D: Use Rigidbody2D, WASD movement on X/Y plane
+      - Platformer2D: Use Rigidbody2D, horizontal movement + jumping
+      - FirstPerson3D: Use CharacterController, WASD + mouse look
+      - ThirdPerson3D: Use CharacterController, WASD + camera-relative movement
+      - PointAndClick: Use NavMeshAgent or transform movement to clicked position
+    tool: unity_script_create
+    params:
+      name: "[characterName]Controller"
+      path: "Assets/_Project/Scripts/Gameplay"
+      # Claude generates content based on movementType
+    on_error: continue
+
+  # Step 3: Create health system if requested
+  - name: create-health-script
+    condition: "[hasHealthSystem] == true"
+    description: Create health and damage system
+    tool: unity_script_create
+    params:
+      name: HealthSystem
+      path: "Assets/_Project/Scripts/Gameplay"
+      content: |
+        using System;
+        using UnityEngine;
+
+        /// <summary>
+        /// Manages health, damage, and death for characters.
+        /// </summary>
+        public class HealthSystem : MonoBehaviour
+        {
+            [Header("Health Settings")]
+            [SerializeField] private float maxHealth = 100f;
+            [SerializeField] private float currentHealth;
+            [SerializeField] private bool isInvulnerable;
+            
+            [Header("Invulnerability")]
+            [SerializeField] private float invulnerabilityDuration = 1f;
+            
+            public float MaxHealth => maxHealth;
+            public float CurrentHealth => currentHealth;
+            public float HealthPercentage => currentHealth / maxHealth;
+            public bool IsAlive => currentHealth > 0;
+            public bool IsInvulnerable => isInvulnerable;
+            
+            public event Action<float, float> OnHealthChanged;
+            public event Action<float> OnDamageTaken;
+            public event Action<float> OnHealed;
+            public event Action OnDeath;
+
+            private void Awake()
+            {
+                currentHealth = maxHealth;
+            }
+
+            public void TakeDamage(float damage)
+            {
+                if (isInvulnerable || !IsAlive) return;
+                
+                currentHealth = Mathf.Max(0, currentHealth - damage);
+                OnDamageTaken?.Invoke(damage);
+                OnHealthChanged?.Invoke(currentHealth, maxHealth);
+                
+                if (currentHealth <= 0)
+                {
+                    Die();
+                }
+            }
+
+            public void Heal(float amount)
+            {
+                if (!IsAlive) return;
+                
+                float previousHealth = currentHealth;
+                currentHealth = Mathf.Min(maxHealth, currentHealth + amount);
+                float healedAmount = currentHealth - previousHealth;
+                
+                if (healedAmount > 0)
+                {
+                    OnHealed?.Invoke(healedAmount);
+                    OnHealthChanged?.Invoke(currentHealth, maxHealth);
+                }
+            }
+
+            public void SetInvulnerable(bool invulnerable)
+            {
+                isInvulnerable = invulnerable;
+            }
+
+            private void Die()
+            {
+                OnDeath?.Invoke();
+                Debug.Log($"{gameObject.name} has died!");
+            }
+
+            public void Revive(float healthPercentage = 1f)
+            {
+                currentHealth = maxHealth * Mathf.Clamp01(healthPercentage);
+                OnHealthChanged?.Invoke(currentHealth, maxHealth);
+            }
+        }
+    on_error: continue
+
+  # Step 4: Add components to character
+  - name: add-character-controller
+    description: Add CharacterController or Rigidbody2D component based on movement type
+    tool: unity_component_add
+    params:
+      target: "[characterName]"
+      # componentType depends on movementType - 2D uses Rigidbody2D, 3D uses CharacterController
+    on_error: continue
+
+  # Step 5: Attach scripts to character
+  - name: attach-movement-script
+    description: Attach the movement controller script
+    tool: unity_component_add
+    params:
+      target: "[characterName]"
+      componentType: "[characterName]Controller"
+    on_error: continue
+
+  - name: attach-health-script
+    condition: "[hasHealthSystem] == true"
+    description: Attach the health system script
+    tool: unity_component_add
+    params:
+      target: "[characterName]"
+      componentType: HealthSystem
+    on_error: continue
+
+  # Step 6: Create prefab
+  - name: create-prefab
+    description: Save character as a prefab
+    tool: unity_prefab_create
+    params:
+      target: "[characterName]"
+      path: "Assets/_Project/Prefabs/Characters"
+    on_error: continue
+
+  # Step 7: Refresh assets
+  - name: refresh-assets
+    description: Refresh to compile new scripts
+    tool: unity_asset_refresh
+    on_error: continue
+
+completion:
+  message: |
+    Character "[characterName]" created successfully!
+    
+    Created:
+    - [characterName] GameObject with Capsule mesh
+    - [characterName]Controller script ([movementType] movement)
+    - HealthSystem script (if hasHealthSystem is true)
+    - Prefab saved to Assets/_Project/Prefabs/Characters
+    
+    Next steps:
+    1. Wait for scripts to compile
+    2. Add a SpriteRenderer or 3D model
+    3. Set up animations
+    4. Configure colliders and physics layers
+    5. Test the character in Play mode
+
+# Movement Type Templates
+# These are reference templates for Claude to use when generating scripts
+
+movement_templates:
+  TopDown2D:
+    description: "2D top-down movement using Rigidbody2D"
+    component: "Rigidbody2D"
+    features:
+      - WASD/Arrow key movement
+      - 8-directional movement
+      - Sprite flip for direction
+
+  Platformer2D:
+    description: "2D platformer with jumping using Rigidbody2D"
+    component: "Rigidbody2D"
+    features:
+      - Horizontal movement
+      - Jumping with ground check
+      - Gravity from Rigidbody2D
+
+  FirstPerson3D:
+    description: "First-person 3D movement using CharacterController"
+    component: "CharacterController"
+    features:
+      - WASD movement relative to camera
+      - Mouse look (requires separate script)
+      - Jumping with gravity
+
+  ThirdPerson3D:
+    description: "Third-person 3D movement using CharacterController"
+    component: "CharacterController"
+    features:
+      - Camera-relative movement
+      - Character rotation towards movement
+      - Jumping with gravity
+
+  PointAndClick:
+    description: "Point and click movement"
+    component: "NavMeshAgent or Transform"
+    features:
+      - Click to move
+      - Pathfinding (if NavMesh)
+      - Smooth movement

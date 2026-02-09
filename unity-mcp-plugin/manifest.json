@@ -1,0 +1,150 @@
+{
+  "name": "unity-game-dev",
+  "display_name": "Unity Game Development Assistant",
+  "version": "1.0.0",
+  "description": "An MCP plugin for controlling and editing Unity projects, enabling AI-assisted video game development with Claude Desktop, Cowork, and Claude Code.",
+  "author": "HavenWoodHollow",
+  "license": "CC0-1.0",
+  "homepage": "https://github.com/longanisainhertaco/HavenWoodHollow",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/longanisainhertaco/HavenWoodHollow.git"
+  },
+  "keywords": [
+    "unity",
+    "game-development",
+    "mcp",
+    "claude",
+    "ai-assistant",
+    "video-games"
+  ],
+  "mcpVersion": "1.0",
+  "runtime": "node",
+  "main": "server/dist/index.js",
+  "capabilities": {
+    "tools": true,
+    "resources": true,
+    "prompts": true
+  },
+  "tools": [
+    {
+      "name": "unity_connect",
+      "description": "Connect to a Unity Editor instance"
+    },
+    {
+      "name": "unity_scene_create",
+      "description": "Create a new Unity scene"
+    },
+    {
+      "name": "unity_scene_load",
+      "description": "Load an existing Unity scene"
+    },
+    {
+      "name": "unity_scene_save",
+      "description": "Save the current Unity scene"
+    },
+    {
+      "name": "unity_gameobject_create",
+      "description": "Create a new GameObject in the scene"
+    },
+    {
+      "name": "unity_gameobject_modify",
+      "description": "Modify properties of a GameObject"
+    },
+    {
+      "name": "unity_component_add",
+      "description": "Add a component to a GameObject"
+    },
+    {
+      "name": "unity_script_create",
+      "description": "Create a new C# script"
+    },
+    {
+      "name": "unity_script_edit",
+      "description": "Edit an existing C# script"
+    },
+    {
+      "name": "unity_asset_import",
+      "description": "Import assets into the Unity project"
+    },
+    {
+      "name": "unity_asset_search",
+      "description": "Search for assets in the project"
+    },
+    {
+      "name": "unity_build",
+      "description": "Build the Unity project for a target platform"
+    },
+    {
+      "name": "unity_play_mode",
+      "description": "Enter or exit Play Mode"
+    },
+    {
+      "name": "unity_console_read",
+      "description": "Read Unity console logs"
+    },
+    {
+      "name": "unity_execute_code",
+      "description": "Execute C# code in the Unity Editor context"
+    },
+    {
+      "name": "unity_prefab_create",
+      "description": "Create a prefab from a GameObject"
+    },
+    {
+      "name": "unity_prefab_instantiate",
+      "description": "Instantiate a prefab in the scene"
+    },
+    {
+      "name": "unity_hierarchy_view",
+      "description": "View the scene hierarchy"
+    },
+    {
+      "name": "unity_project_info",
+      "description": "Get Unity project information"
+    }
+  ],
+  "resources": [
+    {
+      "uri": "unity://project/info",
+      "description": "Current Unity project information"
+    },
+    {
+      "uri": "unity://scene/hierarchy",
+      "description": "Current scene hierarchy"
+    },
+    {
+      "uri": "unity://console/logs",
+      "description": "Unity console logs"
+    }
+  ],
+  "configuration": {
+    "properties": {
+      "unityEditorPath": {
+        "type": "string",
+        "description": "Path to the Unity Editor executable",
+        "default": ""
+      },
+      "projectPath": {
+        "type": "string",
+        "description": "Path to the Unity project",
+        "default": ""
+      },
+      "serverPort": {
+        "type": "number",
+        "description": "Port for the Unity Bridge TCP server",
+        "default": 8090
+      },
+      "autoConnect": {
+        "type": "boolean",
+        "description": "Automatically connect to Unity on startup",
+        "default": true
+      }
+    }
+  },
+  "permissions": [
+    "filesystem:read",
+    "filesystem:write",
+    "network:localhost"
+  ]
+}
