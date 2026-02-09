@@ -79,12 +79,18 @@ namespace HavenwoodHollow.AI.GOAP
             List<PlanNode> leaves,
             List<GOAPAction> availableActions,
             WorldState goalState,
-            GOAPAgent agent)
+            GOAPAgent agent,
+            HashSet<GOAPAction> usedActions = null)
         {
+            if (usedActions == null)
+                usedActions = new HashSet<GOAPAction>();
+
             bool foundPlan = false;
 
             foreach (var action in availableActions)
             {
+                if (usedActions.Contains(action)) continue;
+
                 // Check if preconditions are met in the current state
                 WorldState preconditions = action.GetPreconditions();
                 if (preconditions != null && !parent.State.SatisfiesConditions(preconditions))
@@ -114,12 +120,13 @@ namespace HavenwoodHollow.AI.GOAP
                 }
                 else
                 {
-                    // Recurse with remaining actions (exclude current to prevent loops)
-                    var remaining = availableActions.Where(a => a != action).ToList();
-                    if (BuildGraph(node, leaves, remaining, goalState, agent))
+                    // Recurse, tracking used actions via HashSet to prevent loops
+                    usedActions.Add(action);
+                    if (BuildGraph(node, leaves, availableActions, goalState, agent, usedActions))
                     {
                         foundPlan = true;
                     }
+                    usedActions.Remove(action);
                 }
             }
 

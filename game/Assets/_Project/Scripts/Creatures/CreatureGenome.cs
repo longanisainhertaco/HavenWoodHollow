@@ -14,6 +14,10 @@ namespace HavenwoodHollow.Creatures
         /// <summary>Second set of alleles (from the other parent).</summary>
         public GeneticTrait GeneB;
 
+        /// <summary>Cached trait values to avoid repeated Enum.GetValues allocations.</summary>
+        private static readonly GeneticTrait[] AllTraitValues =
+            (GeneticTrait[])System.Enum.GetValues(typeof(GeneticTrait));
+
         public CreatureGenome(GeneticTrait geneA, GeneticTrait geneB)
         {
             GeneA = geneA;
@@ -30,8 +34,8 @@ namespace HavenwoodHollow.Creatures
         {
             GeneticTrait expressed = GeneticTrait.None;
 
-            // Check each trait bit
-            foreach (GeneticTrait trait in System.Enum.GetValues(typeof(GeneticTrait)))
+            // Check each trait bit using cached values
+            foreach (GeneticTrait trait in AllTraitValues)
             {
                 if (trait == GeneticTrait.None) continue;
 

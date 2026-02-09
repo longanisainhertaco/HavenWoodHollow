@@ -36,6 +36,7 @@ namespace HavenwoodHollow.Player
 
         #region Private Fields
 
+        private const float MovementThreshold = 0.01f;
         private Rigidbody2D rb;
         private Vector2 moveInput;
         private bool isRunning;
@@ -69,7 +70,7 @@ namespace HavenwoodHollow.Player
             // Normalize to prevent diagonal speed boost (Pythagorean theorem)
             Vector2 moveDirection = moveInput.normalized;
 
-            if (moveDirection.sqrMagnitude < 0.01f) return;
+            if (moveDirection.sqrMagnitude < MovementThreshold) return;
 
             // 2. Speed Calculation
             float baseSpeed = isRunning ? runSpeed : walkSpeed;

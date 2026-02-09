@@ -207,16 +207,17 @@ namespace HavenwoodHollow.Farming
                 state.DaysInCurrentPhase++;
                 state.TotalDaysGrown++;
 
-                int phaseDuration = state.CropData.PhaseDurations[state.CurrentPhase];
+                int originalPhaseDuration = state.CropData.PhaseDurations[state.CurrentPhase];
+                int phaseDuration = originalPhaseDuration;
 
                 // Apply fertilizer: reduce effective phase duration
                 if (state.FertilizerModifier > 0f)
                 {
                     int daysSaved = state.CropData.CalculateFertilizerDaysSaved(state.FertilizerModifier);
-                    // Distribute saved days proportionally
-                    float ratio = (float)phaseDuration / state.CropData.TotalGrowthDays;
+                    // Distribute saved days proportionally using original duration
+                    float ratio = (float)originalPhaseDuration / state.CropData.TotalGrowthDays;
                     int phaseSaved = Mathf.Max(0, Mathf.FloorToInt(daysSaved * ratio));
-                    phaseDuration = Mathf.Max(1, phaseDuration - phaseSaved);
+                    phaseDuration = Mathf.Max(1, originalPhaseDuration - phaseSaved);
                 }
 
                 if (state.DaysInCurrentPhase >= phaseDuration)
@@ -240,6 +241,12 @@ namespace HavenwoodHollow.Farming
         }
 
         /// <summary>
+        /// Cache of Tile instances keyed by sprite to avoid repeated allocations.
+        /// ScriptableObject.CreateInstance persists until destroyed, so we reuse tiles.
+        /// </summary>
+        private Dictionary<Sprite, UnityEngine.Tilemaps.Tile> tileCache = new Dictionary<Sprite, UnityEngine.Tilemaps.Tile>();
+
+        /// <summary>
         /// Updates the visual tile sprite based on current growth phase.
         /// Uses Tilemap.SetTile for efficient rendering.
         /// </summary>
@@ -253,9 +260,12 @@ namespace HavenwoodHollow.Farming
 
             if (sprite != null)
             {
-                // Create a tile with the appropriate sprite
-                var tile = ScriptableObject.CreateInstance<UnityEngine.Tilemaps.Tile>();
-                tile.sprite = sprite;
+                if (!tileCache.TryGetValue(sprite, out var tile))
+                {
+                    tile = ScriptableObject.CreateInstance<UnityEngine.Tilemaps.Tile>();
+                    tile.sprite = sprite;
+                    tileCache[sprite] = tile;
+                }
                 cropTilemap.SetTile(position, tile);
             }
         }

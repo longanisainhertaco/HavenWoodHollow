@@ -32,6 +32,11 @@ namespace HavenwoodHollow.Stealth
 
         private Transform playerTransform;
 
+        /// <summary>Cached Light2D references to avoid per-frame FindObjectsByType calls.</summary>
+        private Light2D[] cachedLights;
+        private float lightCacheRefreshInterval = 2f;
+        private float lightCacheTimer;
+
         public bool IsInStealth => isInStealth;
         public float CurrentLightIntensity => currentLightIntensity;
         public float StealthAggroMultiplier => isInStealth ? stealthAggroMultiplier : 1f;
@@ -55,11 +60,20 @@ namespace HavenwoodHollow.Stealth
             {
                 playerTransform = player.transform;
             }
+            RefreshLightCache();
         }
 
         private void Update()
         {
             if (playerTransform == null) return;
+
+            // Periodically refresh the light cache
+            lightCacheTimer += Time.deltaTime;
+            if (lightCacheTimer >= lightCacheRefreshInterval)
+            {
+                RefreshLightCache();
+                lightCacheTimer = 0f;
+            }
 
             currentLightIntensity = CalculateLightAtPosition(playerTransform.position);
             bool wasStealth = isInStealth;
@@ -72,17 +86,25 @@ namespace HavenwoodHollow.Stealth
         }
 
         /// <summary>
+        /// Refreshes the cached array of Light2D references in the scene.
+        /// Called periodically rather than every frame for performance.
+        /// </summary>
+        public void RefreshLightCache()
+        {
+            cachedLights = FindObjectsByType<Light2D>(FindObjectsSortMode.None);
+        }
+
+        /// <summary>
         /// Calculates the aggregate light intensity at a given world position
         /// by sampling nearby Light2D sources.
         /// </summary>
         private float CalculateLightAtPosition(Vector3 position)
         {
+            if (cachedLights == null) return 1f;
+
             float totalIntensity = 0f;
 
-            // Check global lights (e.g., the day/night cycle light)
-            var allLights = FindObjectsByType<Light2D>(FindObjectsSortMode.None);
-
-            foreach (var light in allLights)
+            foreach (var light in cachedLights)
             {
                 if (!light.enabled) continue;
 
