@@ -26,6 +26,17 @@ success() { printf "${GREEN}[OK]${NC}    %s\n" "$*"; }
 warn()    { printf "${YELLOW}[WARN]${NC}  %s\n" "$*"; }
 fail()    { printf "${RED}[FAIL]${NC}  %s\n" "$*"; }
 
+# ── Resolve repo root (this script lives in <repo>/scripts/) ────────────────
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+SERVER_DIR="$REPO_ROOT/unity-mcp-plugin/server"
+
+# ── Load .env if present ────────────────────────────────────────────────────
+if [[ -f "$REPO_ROOT/.env" ]]; then
+  # shellcheck source=/dev/null
+  set -a; source "$REPO_ROOT/.env"; set +a
+fi
+
 # ── Parse flags ──────────────────────────────────────────────────────────────
 SKIP_BREW=false
 SKIP_UNITY=false
@@ -46,17 +57,6 @@ for arg in "$@"; do
       ;;
   esac
 done
-
-# ── Resolve repo root (this script lives in <repo>/scripts/) ────────────────
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
-SERVER_DIR="$REPO_ROOT/unity-mcp-plugin/server"
-
-# ── Load .env if present (CLI flags above take precedence) ──────────────────
-if [[ -f "$REPO_ROOT/.env" ]]; then
-  # shellcheck source=/dev/null
-  set -a; source "$REPO_ROOT/.env"; set +a
-fi
 
 echo ""
 echo "============================================="
