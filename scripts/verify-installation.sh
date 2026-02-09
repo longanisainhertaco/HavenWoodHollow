@@ -24,15 +24,16 @@ fail()    { printf "${RED}[  ✗ ]${NC}  %s\n" "$*"; }
 UNITY_PROJECT=""
 ISSUES=0
 
-for arg in "$@"; do
-  case "$arg" in
+while [[ $# -gt 0 ]]; do
+  case "$1" in
     --unity-project)  shift; UNITY_PROJECT="${1:-}" ;;
-    --unity-project=*) UNITY_PROJECT="${arg#*=}" ;;
+    --unity-project=*) UNITY_PROJECT="${1#*=}" ;;
     -h|--help)
       echo "Usage: $0 [--unity-project /path]"
       exit 0
       ;;
   esac
+  shift
 done
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

@@ -18,16 +18,17 @@ fail()    { printf "${RED}[FAIL]${NC}  %s\n" "$*"; }
 
 # ── Parse arguments ─────────────────────────────────────────────────────────
 SERVER_PORT=8090
-for arg in "$@"; do
-  case "$arg" in
+while [[ $# -gt 0 ]]; do
+  case "$1" in
     --server-port)  shift; SERVER_PORT="${1:-8090}" ;;
-    --server-port=*) SERVER_PORT="${arg#*=}" ;;
+    --server-port=*) SERVER_PORT="${1#*=}" ;;
     -h|--help)
       echo "Usage: $0 [--server-port PORT]"
       echo "  --server-port PORT   MCP bridge port (default: 8090)"
       exit 0
       ;;
   esac
+  shift
 done
 
 # ── Resolve paths ────────────────────────────────────────────────────────────
@@ -103,17 +104,23 @@ PYEOF
 else
   info "Creating new Claude Desktop config…"
 
-  python3 -c "
+  python3 - "$CLAUDE_CONFIG" "$NEW_SERVER_BLOCK" <<'PYEOF'
 import json, sys
+
+config_path = sys.argv[1]
+new_block = json.loads(sys.argv[2])
+
 config = {
-    'mcpServers': {
-        'unity-game-dev': $NEW_SERVER_BLOCK
+    "mcpServers": {
+        "unity-game-dev": new_block
     }
 }
-with open('$CLAUDE_CONFIG', 'w') as f:
+
+with open(config_path, "w") as f:
     json.dump(config, f, indent=2)
-print('Created successfully.')
-"
+
+print("Created successfully.")
+PYEOF
 fi
 
 success "Claude Desktop config written to:"
